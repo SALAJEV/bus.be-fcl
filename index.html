@@ -4,22 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>bus.be filmcodelijsten</title>
-  
-  <!-- Favicon toevoegen -->
+
+  <!-- Favicon -->
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <!-- Als je een PNG gebruikt: -->
-  <!-- <link rel="icon" href="favicon.png" type="image/png" /> -->
-  <!-- Of SVG: -->
-  <!-- <link rel="icon" href="favicon.svg" type="image/svg+xml" /> -->
 
   <style>
     :root {
       --main-orange: #F15D22;
-      --main-gray: #2C2C2C;
-      --main-light-gray: #3E3E3E;
-      --text-light: #f2f2f2;
-      --text-muted: #cccccc;
-      --accent-purple: #4B0082; /* donkerpaars */
+      --accent-purple: #4B0082;
+      --text-dark: #222222;
+      --text-muted: #555555;
+      --overlay-bg: rgba(255, 255, 255, 0.75);
     }
 
     * {
@@ -30,14 +25,21 @@
 
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('achtergrond.jpg') center/cover no-repeat fixed;
-      color: var(--text-light);
+      background: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), url('achtergrond-pc.jpg') center/cover no-repeat fixed;
+      color: var(--text-dark);
+      transition: background-image 0.5s ease-in-out;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        background: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), url('achtergrond-gsm.jpg') center/cover no-repeat fixed;
+      }
     }
 
     .banner {
       width: 100%;
       height: 280px;
-      background-color: rgba(44, 44, 44, 0.95);
+      background-color: rgba(255, 255, 255, 0.6);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -58,21 +60,30 @@
     .banner-text {
       font-size: 28px;
       font-weight: bold;
-      color: white;
+    }
+
+    .banner-text a {
+      color: var(--main-orange);
+      text-decoration: none;
+    }
+
+    .banner-text::after {
+      content: ' filmcodelijsten';
+      color: var(--accent-purple);
     }
 
     .content {
       max-width: 700px;
       margin: 40px auto;
       padding: 40px 20px;
-      background-color: rgba(30, 30, 30, 0.9);
+      background-color: var(--overlay-bg);
       border-radius: 16px;
       text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     }
 
     h2 {
-      color: var(--accent-purple);
+      color: var(--main-orange);
       font-size: 24px;
       margin-bottom: 16px;
     }
@@ -116,6 +127,7 @@
       }
     }
   </style>
+
   <script>
     function vraagToegang(locatie) {
       const code = prompt("Voer toegangscode in om de PDF te bekijken:");
@@ -142,7 +154,7 @@
         overlay.style.left = "0";
         overlay.style.width = "100%";
         overlay.style.height = "100%";
-        overlay.style.background = "rgba(0,0,0,0.85)";
+        overlay.style.background = "rgba(0,0,0,0.5)";
         overlay.style.display = "flex";
         overlay.style.justifyContent = "center";
         overlay.style.alignItems = "center";
@@ -159,14 +171,13 @@
   </script>
 </head>
 <body>
-<div class="banner">
-  <img src="logo.svg" alt="bus.be logo" />
-  <div class="banner-text">
-    <a href="https://www.bus.be" target="_blank" style="color: white; text-decoration: none;">
-      bus.be
-    </a> filmcodelijsten
+
+  <div class="banner">
+    <img src="LOGO.svg" alt="bus.be Logo" />
+    <div class="banner-text">
+      <a href="https://www.bus.be" target="_blank">bus.be</a>
+    </div>
   </div>
-</div>
 
   <div class="content">
     <h2>Bekijk hier de meest actuele lijsten.</h2>
@@ -174,5 +185,6 @@
     <button class="btn" onclick="vraagToegang('zwevegem')">Zwevegem</button>
     <button class="btn" onclick="vraagToegang('diksmuide')">Diksmuide</button>
   </div>
+
 </body>
 </html>
