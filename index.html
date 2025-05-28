@@ -111,11 +111,6 @@
       transform: translateY(-2px);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
     @media (max-width: 768px) {
       .banner-text {
         font-size: 20px;
@@ -148,22 +143,7 @@
       }
 
       if (pdfBestand) {
-        const overlay = document.createElement("div");
-        overlay.style.position = "fixed";
-        overlay.style.top = "0";
-        overlay.style.left = "0";
-        overlay.style.width = "100%";
-        overlay.style.height = "100%";
-        overlay.style.background = "rgba(0,0,0,0.5)";
-        overlay.style.display = "flex";
-        overlay.style.justifyContent = "center";
-        overlay.style.alignItems = "center";
-        overlay.style.zIndex = "1000";
-        overlay.innerHTML = `
-          <iframe src='${pdfBestand}' style='width:80%; height:90%; border:none; border-radius:12px; box-shadow: 0 0 20px #000; animation: fadeIn 0.5s ease-in-out;'></iframe>
-        `;
-        document.body.appendChild(overlay);
-        overlay.addEventListener("click", () => document.body.removeChild(overlay));
+        window.open(pdfBestand, '_blank');
       } else {
         alert("Toegang geweigerd: verkeerde code.");
       }
