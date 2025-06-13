@@ -21,7 +21,6 @@
         --text-dark: #f0f0f0;
         --text-muted: #cccccc;
         --overlay-bg: rgba(34, 34, 34, 0.85);
-        --bg-img: url('achtergrond-pc.jpg'); /* als je een donkere versie van je achtergrond hebt */
       }
     }
 
@@ -148,16 +147,12 @@
       const code = prompt("Voer toegangscode in om de PDF te bekijken:");
       let pdfBestand = null;
 
-      if (locatie === 'zwevegem') {
-        if (code === "550524") {
+      if (code === "550524") {
+        if (locatie === 'zwevegem') {
           pdfBestand = 'filmcode-zwevegem.pdf';
-        } else if (code === "689039") {
-          pdfBestand = 'filmcode-alles.pdf';
-        }
-      } else if (locatie === 'diksmuide') {
-        if (code === "689032") {
+        } else if (locatie === 'diksmuide') {
           pdfBestand = 'filmcode-diksmuide.pdf';
-        } else if (code === "689039") {
+        } else if (locatie === 'alles') {
           pdfBestand = 'filmcode-alles.pdf';
         }
       }
@@ -184,6 +179,7 @@
     <p>Hier vind je alle filmcodelijsten van bus.be voor verschillende stelplaatsen. Kies jouw stelplaats.</p>
     <button class="btn" onclick="vraagToegang('zwevegem')">Zwevegem</button>
     <button class="btn" onclick="vraagToegang('diksmuide')">Diksmuide</button>
+    <button class="btn" onclick="vraagToegang('alles')">Alle codes</button>
   </div>
 
 </body>
