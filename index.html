@@ -2,25 +2,38 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>bus.be filmcodelijsten</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#f15d22" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="bus.be filmcodelijsten" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
 
   <style>
     :root {
-      --main-orange: #F15D22;
-      --accent-purple: #4B0082;
-      --text-dark: #222222;
-      --text-muted: #555555;
-      --overlay-bg: rgba(255, 255, 255, 0.75);
+      --main-orange: #f15d22;
+      --orange-bright: #f3873a;
+      --deep-blue: #14324a;
+      --heading-color: #14324a;
+      --title-accent: #14324a;
+      --text-dark: #1f2933;
+      --text-muted: #4b5b68;
+      --overlay-bg: rgba(255, 255, 255, 0.84);
+      --overlay-border: rgba(255, 255, 255, 0.45);
       --bg-img: url('achtergrond-pc.jpg');
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --text-dark: #f0f0f0;
-        --text-muted: #cccccc;
-        --overlay-bg: rgba(34, 34, 34, 0.85);
+        --text-dark: #f4f8fb;
+        --text-muted: #d0dae2;
+        --heading-color: #edf4fa;
+        --title-accent: #dce8f2;
+        --overlay-bg: rgba(10, 18, 27, 0.86);
+        --overlay-border: rgba(198, 218, 233, 0.26);
       }
     }
 
@@ -31,54 +44,98 @@
     }
 
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), var(--bg-img) center/cover no-repeat fixed;
+      font-family: 'Avenir Next', 'Montserrat', 'Trebuchet MS', sans-serif;
+      min-height: 100vh;
+      background:
+        linear-gradient(130deg, rgba(255, 255, 255, 0.2), rgba(13, 42, 66, 0.35)),
+        var(--bg-img) center/cover no-repeat;
+      background-attachment: fixed;
       color: var(--text-dark);
-      transition: background-image 0.5s ease-in-out, color 0.3s ease-in-out;
+      padding: 28px 18px 46px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: '';
+      position: fixed;
+      z-index: -1;
+      border-radius: 50%;
+      filter: blur(4px);
+      pointer-events: none;
+    }
+
+    body::before {
+      width: 400px;
+      height: 400px;
+      top: -120px;
+      right: -120px;
+      background: radial-gradient(circle, rgba(241, 93, 34, 0.32) 0%, rgba(241, 93, 34, 0) 70%);
+    }
+
+    body::after {
+      width: 300px;
+      height: 300px;
+      bottom: -90px;
+      left: -90px;
+      background: radial-gradient(circle, rgba(20, 50, 74, 0.28) 0%, rgba(20, 50, 74, 0) 70%);
     }
 
     @media (max-width: 768px) {
       :root {
         --bg-img: url('achtergrond-gsm.jpg');
       }
+
       @media (prefers-color-scheme: dark) {
         :root {
           --bg-img: url('achtergrond-gsm.jpg');
         }
       }
+
+      body {
+        background-attachment: scroll;
+      }
+
+      body::before,
+      body::after {
+        opacity: 0.65;
+        filter: blur(2px);
+      }
     }
 
     .banner {
-      width: 100%;
-      height: 280px;
-      background-color: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(6px);
+      width: min(900px, 100%);
+      margin: 0 auto;
+      min-height: 220px;
+      background-color: var(--overlay-bg);
+      border: 1px solid var(--overlay-border);
+      backdrop-filter: blur(12px);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 20px;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .banner {
-        background-color: rgba(0, 0, 0, 0.4);
-      }
+      padding: 30px 24px 26px;
+      border-radius: 26px;
+      box-shadow: 0 24px 50px rgba(14, 24, 33, 0.2);
+      animation: fade-up 500ms ease-out;
     }
 
     .banner img {
-      width: 110px;
+      width: 120px;
       height: auto;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       background-color: white;
-      padding: 10px;
-      border-radius: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      box-shadow: 0 8px 18px rgba(20, 50, 74, 0.22);
     }
 
     .banner-text {
-      font-size: 28px;
-      font-weight: bold;
+      font-size: clamp(1.4rem, 2vw + 0.9rem, 2.1rem);
+      font-weight: 800;
+      letter-spacing: 0.02em;
     }
 
     .banner-text a {
@@ -88,56 +145,131 @@
 
     .banner-text::after {
       content: ' filmcodelijsten';
-      color: var(--accent-purple);
+      color: var(--title-accent);
     }
 
-    .content {
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 40px 20px;
-      background-color: var(--overlay-bg);
-      border-radius: 16px;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    h2 {
-      color: var(--main-orange);
-      font-size: 24px;
-      margin-bottom: 16px;
-    }
-
-    p {
+    .banner-description {
+      margin-top: 10px;
+      max-width: 720px;
       color: var(--text-muted);
-      font-size: 18px;
-      margin-bottom: 30px;
+      font-size: clamp(0.95rem, 0.35vw + 0.9rem, 1.08rem);
+      line-height: 1.45;
+      text-align: center;
+    }
+
+    .cards-layout {
+      max-width: 1040px;
+      margin: 24px auto 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .card {
+      padding: 34px 26px;
+      background-color: var(--overlay-bg);
+      border: 1px solid var(--overlay-border);
+      border-radius: 26px;
+      box-shadow: 0 24px 50px rgba(14, 24, 33, 0.2);
+      text-align: center;
+      animation: fade-up 650ms ease-out both;
+      animation-delay: 120ms;
+    }
+
+    .card h2 {
+      color: var(--heading-color);
+      font-size: clamp(1.3rem, 1.4vw + 0.8rem, 1.9rem);
+      margin-bottom: 12px;
+      letter-spacing: 0.01em;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: clamp(1rem, 0.35vw + 0.95rem, 1.15rem);
+      margin-bottom: 28px;
+      line-height: 1.55;
+    }
+
+    .buttons-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(220px, 1fr));
+      gap: 14px;
     }
 
     .btn {
-      background-color: var(--main-orange);
+      background: linear-gradient(135deg, var(--main-orange), var(--orange-bright));
       color: white;
-      padding: 12px 24px;
-      margin: 10px;
+      padding: 14px 18px;
+      min-height: 44px;
       border: none;
       font-size: 16px;
-      border-radius: 8px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      border-radius: 12px;
       cursor: pointer;
-      transition: background-color 0.3s, transform 0.2s;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+      box-shadow: 0 10px 22px rgba(241, 93, 34, 0.32);
     }
 
-    .btn:hover {
-      background-color: #d14f1d;
+    .btn:hover,
+    .btn:focus-visible {
       transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(241, 93, 34, 0.38);
+      filter: saturate(1.08);
+      outline: none;
     }
 
-    @media (max-width: 768px) {
-      .banner-text {
-        font-size: 20px;
+    @media (min-width: 992px) {
+      .cards-layout {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: stretch;
+      }
+    }
+
+    @media (min-width: 768px) and (max-width: 991px) {
+      body {
+        padding: 24px 18px 38px;
+      }
+
+      .card {
+        padding: 30px 22px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      body {
+        padding: 18px 14px 30px;
+      }
+
+      .banner {
+        min-height: 180px;
+        border-radius: 20px;
+        box-shadow: 0 16px 30px rgba(14, 24, 33, 0.16);
+      }
+
+      .card {
+        padding: 26px 16px;
+        border-radius: 20px;
+        box-shadow: 0 14px 30px rgba(14, 24, 33, 0.16);
+      }
+
+      .buttons-grid {
+        grid-template-columns: 1fr;
       }
 
       .btn {
         width: 100%;
-        max-width: 250px;
+      }
+    }
+
+    @keyframes fade-up {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
   </style>
@@ -145,23 +277,40 @@
   <script>
     function vraagToegang(locatie) {
       const code = prompt("Voer toegangscode in om de PDF te bekijken:");
-      let pdfBestand = null;
-
-      if (code === "550524") {
-        if (locatie === 'zwevegem') {
-          pdfBestand = 'filmcode-zwevegem.pdf';
-        } else if (locatie === 'diksmuide') {
-          pdfBestand = 'filmcode-diksmuide.pdf';
-        } else if (locatie === 'alles') {
-          pdfBestand = 'filmcode-alles.pdf';
-        }
+      if (code === null) {
+        return;
       }
 
-      if (pdfBestand) {
-        window.open(pdfBestand, '_blank');
-      } else {
+      if (code.trim() !== "550524") {
         alert("Toegang geweigerd: verkeerde code.");
+        return;
       }
+
+      const pdfPerLocatie = {
+        zwevegem: 'filmcode-zwevegem.pdf',
+        diksmuide: 'filmcode-diksmuide.pdf',
+        alles: 'filmcode-alles.pdf',
+        toerisme: 'filmcode-toerisme.pdf'
+      };
+
+      const pdfBestand = pdfPerLocatie[locatie];
+      if (!pdfBestand) {
+        alert("Onbekende lijst geselecteerd.");
+        return;
+      }
+
+      const nieuwVenster = window.open(pdfBestand, '_blank', 'noopener');
+      if (!nieuwVenster) {
+        alert("Popup geblokkeerd. Sta pop-ups toe om de PDF te openen.");
+      }
+    }
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {
+          /* registratie faalde; pagina blijft werken zonder offline mode */
+        });
+      });
     }
   </script>
 </head>
@@ -170,17 +319,28 @@
   <div class="banner">
     <img src="logo.svg" alt="bus.be logo" />
     <div class="banner-text">
-      <a href="https://www.bus.be" target="_blank">bus.be</a>
+      <a href="https://www.bus.be" target="_blank" rel="noopener noreferrer">bus.be</a>
     </div>
+    <p class="banner-description">Op deze site vind je de actuele filmcodelijsten voor lijnbussen en toerismebussen van bus.be, per stelplaats en gebruik.</p>
   </div>
 
-  <div class="content">
-    <h2>Bekijk hier de meest actuele lijsten.</h2>
-    <p>Hier vind je alle filmcodelijsten van bus.be voor verschillende stelplaatsen. Kies jouw stelplaats.</p>
-    <button class="btn" onclick="vraagToegang('zwevegem')">Zwevegem</button>
-    <button class="btn" onclick="vraagToegang('diksmuide')">Diksmuide</button>
-    <button class="btn" onclick="vraagToegang('alles')">Alle codes</button>
-  </div>
+  <main class="cards-layout">
+    <section class="card card-main">
+      <h2>Voor lijnbussen</h2>
+      <p>Kies hier je eigen stelplaats.</p>
+      <div class="buttons-grid">
+        <button type="button" class="btn" onclick="vraagToegang('zwevegem')">Zwevegem</button>
+        <button type="button" class="btn" onclick="vraagToegang('diksmuide')">Diksmuide</button>
+        <button type="button" class="btn" onclick="vraagToegang('alles')">Alle filmcodes</button>
+      </div>
+    </section>
+
+    <section class="card card-tourism">
+      <h2>Voor toeringcars</h2>
+      <p>Hier heb je filmcodelijst voor de toerisme-bussen.</p>
+      <button type="button" class="btn" onclick="vraagToegang('toerisme')">Toerisme bus</button>
+    </section>
+  </main>
 
 </body>
 </html>
