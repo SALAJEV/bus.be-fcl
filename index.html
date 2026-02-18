@@ -128,7 +128,7 @@
       position: fixed;
       inset: 0;
       z-index: 9999;
-      display: grid;
+      display: none;
       place-items: center;
       background: #ffffff;
       opacity: 0;
@@ -138,14 +138,21 @@
     }
 
     .pwa-splash.is-visible {
+      display: grid;
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
     }
 
     .pwa-splash.is-hiding {
+      display: grid;
       opacity: 0;
       visibility: hidden;
+      pointer-events: none;
+    }
+
+    .pwa-splash[hidden] {
+      display: none !important;
     }
 
     .pwa-splash-logo-wrap {
@@ -336,8 +343,6 @@
   <script>
     function isStandalonePwa() {
       return window.matchMedia('(display-mode: standalone)').matches
-        || window.matchMedia('(display-mode: fullscreen)').matches
-        || window.matchMedia('(display-mode: minimal-ui)').matches
         || window.navigator.standalone === true;
     }
 
@@ -353,16 +358,25 @@
         splash.classList.add('is-visible');
       });
 
-      const sluitSplash = () => {
-        splash.classList.add('is-hiding');
-        splash.addEventListener('transitionend', () => {
-          splash.hidden = true;
-          splash.classList.remove('is-visible', 'is-hiding');
-          document.body.classList.remove('pwa-splash-active');
-        }, { once: true });
+      let afgewerkt = false;
+      const afwerken = () => {
+        if (afgewerkt) {
+          return;
+        }
+        afgewerkt = true;
+        splash.hidden = true;
+        splash.classList.remove('is-visible', 'is-hiding');
+        document.body.classList.remove('pwa-splash-active');
       };
 
-      window.setTimeout(sluitSplash, 1150);
+      const sluitSplash = () => {
+        splash.classList.add('is-hiding');
+        window.setTimeout(afwerken, 380);
+      };
+
+      splash.addEventListener('transitionend', afwerken, { once: true });
+      window.setTimeout(sluitSplash, 950);
+      window.setTimeout(afwerken, 1600);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -370,20 +384,12 @@
     });
 
     function vraagToegang(locatie) {
-      const nieuwVenster = window.open('', '_blank', 'noopener');
-
       const code = prompt("Voer toegangscode in om de PDF te bekijken:");
       if (code === null) {
-        if (nieuwVenster) {
-          nieuwVenster.close();
-        }
         return;
       }
 
       if (code.trim() !== "550524") {
-        if (nieuwVenster) {
-          nieuwVenster.close();
-        }
         alert("Toegang geweigerd: verkeerde code.");
         return;
       }
@@ -397,23 +403,22 @@
 
       const pdfBestand = pdfPerLocatie[locatie];
       if (!pdfBestand) {
-        if (nieuwVenster) {
-          nieuwVenster.close();
-        }
         alert("Onbekende lijst geselecteerd.");
         return;
       }
 
-      if (nieuwVenster) {
-        try {
-          nieuwVenster.location.href = pdfBestand;
-          return;
-        } catch (_error) {
-          /* fallback naar hetzelfde venster in beperktere PWA-omgevingen */
-        }
+      const isIosToestel = /iPad|iPhone|iPod/.test(window.navigator.userAgent)
+        || (window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1);
+
+      if (isStandalonePwa() || isIosToestel) {
+        window.location.href = pdfBestand;
+        return;
       }
 
-      window.location.href = pdfBestand;
+      const nieuwVenster = window.open(pdfBestand, '_blank', 'noopener');
+      if (!nieuwVenster) {
+        window.location.href = pdfBestand;
+      }
     }
 
     if ('serviceWorker' in navigator) {
