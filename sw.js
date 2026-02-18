@@ -1,15 +1,12 @@
-const CACHE_NAME = "busbe-filmcodes-v1";
+const CACHE_NAME = "busbe-filmcodes-v2";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
   "./logo.svg",
-  "./favicon.ico",
+  "./logo.jpg",
   "./achtergrond-pc.jpg",
-  "./achtergrond-gsm.jpg",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png",
-  "./icons/apple-touch-icon.png"
+  "./achtergrond-gsm.jpg"
 ];
 
 self.addEventListener("install", (event) => {

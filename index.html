@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>bus.be filmcodelijsten</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="logo.jpg" type="image/jpeg" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#f15d22" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="bus.be filmcodelijsten" />
-  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="apple-touch-icon" href="logo.jpg" />
 
   <style>
     :root {
@@ -276,12 +276,20 @@
 
   <script>
     function vraagToegang(locatie) {
+      const nieuwVenster = window.open('', '_blank', 'noopener');
+      if (!nieuwVenster) {
+        alert("Popup geblokkeerd. Sta pop-ups toe om de PDF te openen.");
+        return;
+      }
+
       const code = prompt("Voer toegangscode in om de PDF te bekijken:");
       if (code === null) {
+        nieuwVenster.close();
         return;
       }
 
       if (code.trim() !== "550524") {
+        nieuwVenster.close();
         alert("Toegang geweigerd: verkeerde code.");
         return;
       }
@@ -295,14 +303,12 @@
 
       const pdfBestand = pdfPerLocatie[locatie];
       if (!pdfBestand) {
+        nieuwVenster.close();
         alert("Onbekende lijst geselecteerd.");
         return;
       }
 
-      const nieuwVenster = window.open(pdfBestand, '_blank', 'noopener');
-      if (!nieuwVenster) {
-        alert("Popup geblokkeerd. Sta pop-ups toe om de PDF te openen.");
-      }
+      nieuwVenster.location.href = pdfBestand;
     }
 
     if ('serviceWorker' in navigator) {
