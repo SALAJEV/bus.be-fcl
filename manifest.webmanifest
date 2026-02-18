@@ -1,6 +1,6 @@
 {
-  "name": "bus.be Filmcodes",
-  "short_name": "Filmcodes",
+  "name": "Filmcodelijsten",
+  "short_name": "Filmcodelijsten",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
