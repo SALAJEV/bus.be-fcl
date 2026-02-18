@@ -91,18 +91,11 @@
       background: radial-gradient(circle, rgba(20, 50, 74, 0.28) 0%, rgba(20, 50, 74, 0) 70%);
     }
 
-    @media (max-width: 768px) {
-      :root {
-        --bg-img: url('achtergrond-gsm.jpg');
-      }
-
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --bg-img: url('achtergrond-gsm.jpg');
-        }
-      }
-
+    @media (max-width: 900px) {
       body {
+        background:
+          linear-gradient(130deg, rgba(255, 255, 255, 0.2), rgba(13, 42, 66, 0.35)),
+          url('achtergrond-gsm.jpg') center/cover no-repeat;
         background-attachment: scroll;
       }
 

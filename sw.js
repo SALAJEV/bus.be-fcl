@@ -1,4 +1,4 @@
-const CACHE_NAME = "busbe-filmcodes-v4";
+const CACHE_NAME = "busbe-filmcodes-v5";
 const APP_SHELL = [
   "./",
   "./index.html",
