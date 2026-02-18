@@ -48,9 +48,15 @@
       padding: 0;
     }
 
+    html {
+      min-height: 100%;
+      background-color: #14324a;
+    }
+
     body {
       font-family: 'Avenir Next', 'Montserrat', 'Trebuchet MS', sans-serif;
       min-height: 100vh;
+      min-height: -webkit-fill-available;
       background:
         linear-gradient(130deg, rgba(255, 255, 255, 0.2), rgba(13, 42, 66, 0.35)),
         var(--bg-img) center/cover no-repeat;
@@ -59,6 +65,13 @@
       padding: 28px 18px 46px;
       position: relative;
       overflow-x: hidden;
+    }
+
+    @supports (-webkit-touch-callout: none) {
+      html,
+      body {
+        min-height: -webkit-fill-available;
+      }
     }
 
     body.pwa-splash-active {
@@ -346,6 +359,21 @@
         || window.navigator.standalone === true;
     }
 
+    function pasAchtergrondAan() {
+      const isMobiel = window.matchMedia('(max-width: 900px)').matches;
+      const achtergrondBestand = isMobiel ? 'achtergrond-gsm.jpg' : 'achtergrond-pc.jpg';
+      const achtergrond = "linear-gradient(130deg, rgba(255, 255, 255, 0.2), rgba(13, 42, 66, 0.35)), url('" + achtergrondBestand + "') center/cover no-repeat";
+      const attachment = isMobiel ? 'scroll' : 'fixed';
+
+      document.documentElement.style.background = achtergrond;
+      document.documentElement.style.backgroundAttachment = attachment;
+      document.documentElement.style.backgroundColor = '#14324a';
+
+      document.body.style.background = achtergrond;
+      document.body.style.backgroundAttachment = attachment;
+      document.body.style.backgroundColor = '#14324a';
+    }
+
     function toonPwaStartanimatie() {
       const splash = document.getElementById('pwaSplash');
       if (!splash || !isStandalonePwa()) {
@@ -380,8 +408,11 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      pasAchtergrondAan();
       toonPwaStartanimatie();
     });
+    window.addEventListener('resize', pasAchtergrondAan);
+    window.addEventListener('orientationchange', pasAchtergrondAan);
 
     const TOEGANG_OPGESLAGEN_SLEUTEL = 'busbe_filmcodelijsten_toegang_ok';
 
