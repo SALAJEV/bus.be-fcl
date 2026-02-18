@@ -7,6 +7,7 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#f15d22" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Filmcodelijsten" />
@@ -24,6 +25,8 @@
       --overlay-bg: rgba(255, 255, 255, 0.84);
       --overlay-border: rgba(255, 255, 255, 0.45);
       --bg-img: url('achtergrond-pc.jpg');
+      --splash-ring: rgba(241, 93, 34, 0.26);
+      --splash-shadow: rgba(20, 50, 74, 0.25);
     }
 
     @media (prefers-color-scheme: dark) {
@@ -34,6 +37,8 @@
         --title-accent: #dce8f2;
         --overlay-bg: rgba(10, 18, 27, 0.86);
         --overlay-border: rgba(198, 218, 233, 0.26);
+        --splash-ring: rgba(20, 50, 74, 0.32);
+        --splash-shadow: rgba(10, 18, 27, 0.34);
       }
     }
 
@@ -54,6 +59,10 @@
       padding: 28px 18px 46px;
       position: relative;
       overflow-x: hidden;
+    }
+
+    body.pwa-splash-active {
+      overflow: hidden;
     }
 
     body::before,
@@ -120,6 +129,48 @@
       border-radius: 26px;
       box-shadow: 0 24px 50px rgba(14, 24, 33, 0.2);
       animation: fade-up 500ms ease-out;
+    }
+
+    .pwa-splash {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: grid;
+      place-items: center;
+      background: #ffffff;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 320ms ease, visibility 320ms ease;
+      pointer-events: none;
+    }
+
+    .pwa-splash.is-visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .pwa-splash.is-hiding {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .pwa-splash-logo-wrap {
+      width: min(180px, 46vw);
+      aspect-ratio: 1;
+      border-radius: 26px;
+      background: #ffffff;
+      border: 1px solid var(--splash-ring);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 16px 36px var(--splash-shadow);
+      animation: splash-pop 880ms ease-out both;
+    }
+
+    .pwa-splash-logo-wrap img {
+      width: 70%;
+      height: auto;
+      display: block;
     }
 
     .banner img {
@@ -272,24 +323,74 @@
         transform: translateY(0);
       }
     }
+
+    @keyframes splash-pop {
+      0% {
+        opacity: 0;
+        transform: scale(0.86);
+      }
+      65% {
+        opacity: 1;
+        transform: scale(1.03);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
   </style>
 
   <script>
-    function vraagToegang(locatie) {
-      const nieuwVenster = window.open('', '_blank', 'noopener');
-      if (!nieuwVenster) {
-        alert("Popup geblokkeerd. Sta pop-ups toe om de PDF te openen.");
+    function isStandalonePwa() {
+      return window.matchMedia('(display-mode: standalone)').matches
+        || window.matchMedia('(display-mode: fullscreen)').matches
+        || window.matchMedia('(display-mode: minimal-ui)').matches
+        || window.navigator.standalone === true;
+    }
+
+    function toonPwaStartanimatie() {
+      const splash = document.getElementById('pwaSplash');
+      if (!splash || !isStandalonePwa()) {
         return;
       }
 
+      document.body.classList.add('pwa-splash-active');
+      splash.hidden = false;
+      requestAnimationFrame(() => {
+        splash.classList.add('is-visible');
+      });
+
+      const sluitSplash = () => {
+        splash.classList.add('is-hiding');
+        splash.addEventListener('transitionend', () => {
+          splash.hidden = true;
+          splash.classList.remove('is-visible', 'is-hiding');
+          document.body.classList.remove('pwa-splash-active');
+        }, { once: true });
+      };
+
+      window.setTimeout(sluitSplash, 1150);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      toonPwaStartanimatie();
+    });
+
+    function vraagToegang(locatie) {
+      const nieuwVenster = window.open('', '_blank', 'noopener');
+
       const code = prompt("Voer toegangscode in om de PDF te bekijken:");
       if (code === null) {
-        nieuwVenster.close();
+        if (nieuwVenster) {
+          nieuwVenster.close();
+        }
         return;
       }
 
       if (code.trim() !== "550524") {
-        nieuwVenster.close();
+        if (nieuwVenster) {
+          nieuwVenster.close();
+        }
         alert("Toegang geweigerd: verkeerde code.");
         return;
       }
@@ -303,12 +404,23 @@
 
       const pdfBestand = pdfPerLocatie[locatie];
       if (!pdfBestand) {
-        nieuwVenster.close();
+        if (nieuwVenster) {
+          nieuwVenster.close();
+        }
         alert("Onbekende lijst geselecteerd.");
         return;
       }
 
-      nieuwVenster.location.href = pdfBestand;
+      if (nieuwVenster) {
+        try {
+          nieuwVenster.location.href = pdfBestand;
+          return;
+        } catch (_error) {
+          /* fallback naar hetzelfde venster in beperktere PWA-omgevingen */
+        }
+      }
+
+      window.location.href = pdfBestand;
     }
 
     if ('serviceWorker' in navigator) {
@@ -321,6 +433,11 @@
   </script>
 </head>
 <body>
+  <div id="pwaSplash" class="pwa-splash" hidden aria-hidden="true">
+    <div class="pwa-splash-logo-wrap">
+      <img src="logo.svg" alt="" />
+    </div>
+  </div>
 
   <div class="banner">
     <img src="logo.svg" alt="bus.be logo" />
