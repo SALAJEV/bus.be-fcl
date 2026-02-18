@@ -383,15 +383,37 @@
       toonPwaStartanimatie();
     });
 
-    function vraagToegang(locatie) {
-      const code = prompt("Voer toegangscode in om de PDF te bekijken:");
-      if (code === null) {
-        return;
-      }
+    const TOEGANG_OPGESLAGEN_SLEUTEL = 'busbe_filmcodelijsten_toegang_ok';
 
-      if (code.trim() !== "550524") {
-        alert("Toegang geweigerd: verkeerde code.");
-        return;
+    function heeftOpgeslagenToegang() {
+      try {
+        return window.localStorage.getItem(TOEGANG_OPGESLAGEN_SLEUTEL) === '1';
+      } catch (_error) {
+        return false;
+      }
+    }
+
+    function slaToegangOp() {
+      try {
+        window.localStorage.setItem(TOEGANG_OPGESLAGEN_SLEUTEL, '1');
+      } catch (_error) {
+        /* als storage niet beschikbaar is, blijft de app gewoon werken */
+      }
+    }
+
+    function vraagToegang(locatie) {
+      if (!heeftOpgeslagenToegang()) {
+        const code = prompt("Voer toegangscode in om de PDF te bekijken:");
+        if (code === null) {
+          return;
+        }
+
+        if (code.trim() !== "550524") {
+          alert("Toegang geweigerd: verkeerde code.");
+          return;
+        }
+
+        slaToegangOp();
       }
 
       const pdfPerLocatie = {
@@ -407,18 +429,7 @@
         return;
       }
 
-      const isIosToestel = /iPad|iPhone|iPod/.test(window.navigator.userAgent)
-        || (window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1);
-
-      if (isStandalonePwa() || isIosToestel) {
-        window.location.href = pdfBestand;
-        return;
-      }
-
-      const nieuwVenster = window.open(pdfBestand, '_blank', 'noopener');
-      if (!nieuwVenster) {
-        window.location.href = pdfBestand;
-      }
+      window.location.href = pdfBestand;
     }
 
     if ('serviceWorker' in navigator) {
