@@ -15,6 +15,7 @@
 
   <style>
     :root {
+      --ui-font: 'Aptos', 'Aptos Display', 'Segoe UI', 'Calibri', sans-serif;
       --main-orange: #ef5a2a;
       --orange-bright: #ff8a3d;
       --orange-soft: #ffc28e;
@@ -68,10 +69,18 @@
     html {
       min-height: 100%;
       background-color: #0d2437;
+      font-family: var(--ui-font);
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font-family: inherit;
     }
 
     body {
-      font-family: 'Plus Jakarta Sans', 'Avenir Next', 'Montserrat', 'Trebuchet MS', sans-serif;
+      font-family: var(--ui-font);
       min-height: 100vh;
       min-height: -webkit-fill-available;
       background:
@@ -84,6 +93,8 @@
       padding: 32px 18px 44px;
       position: relative;
       overflow-x: hidden;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
     }
 
     .layout-shell {
@@ -240,7 +251,8 @@
       width: min(180px, 46vw);
       aspect-ratio: 1;
       border-radius: 26px;
-      background: #ffffff;
+      background-color: #ffffff !important;
+      background-image: none !important;
       border: 1px solid var(--splash-ring);
       display: grid;
       place-items: center;
@@ -579,8 +591,9 @@
         var(--overlay-bg);
       box-shadow: 0 26px 48px rgba(4, 14, 22, 0.45);
       display: grid;
-      grid-template-rows: auto 1fr;
+      grid-template-rows: auto minmax(0, 1fr);
       overflow: hidden;
+      overscroll-behavior: contain;
     }
 
     .pdf-toolbar {
@@ -593,38 +606,19 @@
     }
 
     .pdf-title {
+      flex: 1;
+      min-width: 0;
       font-size: clamp(1rem, 0.6vw + 0.9rem, 1.25rem);
       color: var(--heading-color);
       line-height: 1.2;
     }
 
-    .pdf-actions {
+    .pdf-controls {
       display: flex;
       align-items: center;
       gap: 8px;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       justify-content: flex-end;
-    }
-
-    .pdf-download {
-      background: linear-gradient(135deg, var(--main-orange), var(--orange-bright));
-      border: 1px solid rgba(255, 219, 193, 0.46);
-      color: #ffffff;
-      text-decoration: none;
-      box-shadow: 0 10px 20px rgba(239, 90, 42, 0.34);
-    }
-
-    .pdf-download:visited {
-      color: #ffffff;
-      text-decoration: none;
-    }
-
-    .pdf-download:hover,
-    .pdf-download:focus-visible,
-    .pdf-download:active {
-      text-decoration: none;
-      box-shadow: 0 14px 26px rgba(239, 90, 42, 0.4);
-      filter: saturate(1.06);
     }
 
     .btn-soft {
@@ -654,7 +648,7 @@
       line-height: 1;
     }
 
-    .pdf-actions .btn {
+    .pdf-controls .btn {
       width: auto;
       min-height: 40px;
       padding: 10px 14px;
@@ -663,6 +657,7 @@
     .pdf-frame {
       width: 100%;
       height: 100%;
+      min-height: 0;
       border: none;
       background: #ffffff;
     }
@@ -777,32 +772,31 @@
       }
 
       .pdf-toolbar {
-        flex-direction: row;
+        display: flex;
         align-items: center;
+        justify-content: space-between;
+        gap: 8px;
         padding: calc(8px + env(safe-area-inset-top)) 10px 10px;
       }
 
       .pdf-title {
-        max-width: 62vw;
+        max-width: 56vw;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        font-size: 0.94rem;
+        line-height: 1.2;
       }
 
-      .pdf-actions {
-        justify-content: flex-end;
-        flex-wrap: nowrap;
+      .pdf-controls {
         gap: 6px;
       }
 
-      .pdf-actions .btn {
+      .pdf-controls .btn {
         width: auto;
-      }
-
-      .pdf-download {
-        min-height: 36px;
+        min-height: 40px;
         padding: 8px 12px;
-        font-size: 0.88rem;
+        font-size: 0.9rem;
       }
 
       .btn-close {
@@ -999,15 +993,12 @@
       const overlay = document.getElementById('pdfOverlay');
       const frame = document.getElementById('pdfFrame');
       const titel = document.getElementById('pdfTitel');
-      const downloadKnop = document.getElementById('pdfDownloadKnop');
-      if (!overlay || !frame || !titel || !downloadKnop) {
+      if (!overlay || !frame || !titel) {
         return;
       }
 
       const weergaveUrl = gekozenPdf.bestand + '#view=FitH';
       titel.textContent = gekozenPdf.titel;
-      downloadKnop.href = gekozenPdf.bestand;
-      downloadKnop.setAttribute('download', gekozenPdf.bestand.split('/').pop() || 'filmcodes.pdf');
       frame.setAttribute('src', weergaveUrl);
 
       overlay.hidden = false;
@@ -1064,6 +1055,11 @@
       const gekozenPdf = PDF_PER_LOCATIE[locatie];
       if (!gekozenPdf) {
         alert("Onbekende lijst geselecteerd.");
+        return;
+      }
+
+      if (window.matchMedia('(max-width: 767px)').matches) {
+        window.location.assign(gekozenPdf.bestand);
         return;
       }
 
@@ -1198,8 +1194,7 @@
     <section class="pdf-panel" role="dialog" aria-modal="true" aria-labelledby="pdfTitel">
       <header class="pdf-toolbar">
         <h2 id="pdfTitel" class="pdf-title">Filmcodelijst</h2>
-        <div class="pdf-actions">
-          <a id="pdfDownloadKnop" class="btn pdf-download" href="./" download>Download</a>
+        <div class="pdf-controls">
           <button id="pdfSluitKnop" type="button" class="btn btn-soft btn-close" aria-label="Sluiten">&#10005;</button>
         </div>
       </header>
