@@ -420,6 +420,7 @@
 
   <script>
     const PWA_GEINSTALLEERD_SLEUTEL = 'busbe_filmcodelijsten_pwa_geinstalleerd';
+    let androidInstallPromptBeschikbaar = false;
 
     function isStandalonePwa() {
       return window.matchMedia('(display-mode: standalone)').matches
@@ -446,10 +447,12 @@
       const userAgent = window.navigator.userAgent || '';
       const isIosToestel = /iPad|iPhone|iPod/i.test(userAgent);
       const isSafari = /Safari/i.test(userAgent) && !/CriOS|FxiOS|EdgiOS|OPiOS|Android/i.test(userAgent);
-      const isAndroidToestel = /Android/i.test(userAgent);
+      const isAndroidChrome = /Android/i.test(userAgent) && /Chrome/i.test(userAgent)
+        && !/EdgA|OPR|SamsungBrowser|YaBrowser/i.test(userAgent);
       const heeftInstallPromptOndersteuning = 'onbeforeinstallprompt' in window;
 
-      return (isIosToestel && isSafari) || (isAndroidToestel && heeftInstallPromptOndersteuning);
+      return (isIosToestel && isSafari)
+        || (isAndroidChrome && (heeftInstallPromptOndersteuning || androidInstallPromptBeschikbaar));
     }
 
     function updateInstallatieKaart() {
@@ -523,6 +526,11 @@
     });
     window.addEventListener('resize', pasAchtergrondAan);
     window.addEventListener('orientationchange', pasAchtergrondAan);
+    window.addEventListener('pageshow', updateInstallatieKaart);
+    window.addEventListener('beforeinstallprompt', () => {
+      androidInstallPromptBeschikbaar = true;
+      updateInstallatieKaart();
+    });
     window.addEventListener('appinstalled', () => {
       markeerPwaAlsGeinstalleerd();
       updateInstallatieKaart();
