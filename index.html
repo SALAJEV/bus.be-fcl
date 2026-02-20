@@ -340,6 +340,21 @@
       outline: none;
     }
 
+    .card-actions .buttons-grid {
+      margin-bottom: 14px;
+    }
+
+    .btn-half {
+      display: block;
+      width: 100%;
+      max-width: calc((100% - 14px) / 2);
+      margin: 0 auto;
+    }
+
+    .btn-total {
+      margin-top: 10px;
+    }
+
     @media (min-width: 992px) {
       .cards-layout {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -380,6 +395,10 @@
 
       .btn {
         width: 100%;
+      }
+
+      .btn-half {
+        max-width: 100%;
       }
 
       .install-columns {
@@ -646,19 +665,21 @@
     <section class="card card-main">
       <h2>Voor lijnbussen</h2>
       <p>Kies hier je eigen stelplaats.</p>
-      <div class="buttons-grid">
-        <button type="button" class="btn" onclick="vraagToegang('zwevegem')">Zwevegem</button>
-        <button type="button" class="btn" onclick="vraagToegang('diksmuide')">Diksmuide</button>
-        <button type="button" class="btn" onclick="vraagToegang('alles')">Alle filmcodes</button>
+      <div class="card-actions">
+        <div class="buttons-grid">
+          <button type="button" class="btn" onclick="vraagToegang('zwevegem')">Zwevegem</button>
+          <button type="button" class="btn" onclick="vraagToegang('diksmuide')">Diksmuide</button>
+        </div>
+        <button type="button" class="btn btn-half btn-total" onclick="vraagToegang('alles')">Alle filmcodes</button>
       </div>
     </section>
 
     <section class="card card-tourism">
       <h2>Voor touringcars</h2>
       <p>Hier heb je filmcodelijsten voor de toerisme-bussen.</p>
-      <div class="buttons-grid">
-        <button type="button" class="btn" onclick="vraagToegang('toerisme')">Toerisme bus</button>
-        <button type="button" class="btn" onclick="vraagToegang('allesToerisme')">Alle filmcodes toerisme</button>
+      <div class="card-actions">
+        <button type="button" class="btn btn-half" onclick="vraagToegang('toerisme')">Toerisme bus</button>
+        <button type="button" class="btn btn-half btn-total" onclick="vraagToegang('allesToerisme')">Alle filmcodes toerisme</button>
       </div>
     </section>
   </main>
