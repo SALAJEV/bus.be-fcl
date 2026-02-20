@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>bus.be filmcodelijsten</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="media/favicon.ico" type="image/x-icon" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#f15d22" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Filmcodelijsten" />
-  <link rel="apple-touch-icon" href="logo.jpg" />
+  <link rel="apple-touch-icon" href="media/logo.jpg" />
 
   <style>
     :root {
@@ -24,7 +24,7 @@
       --text-muted: #4b5b68;
       --overlay-bg: rgba(255, 255, 255, 0.84);
       --overlay-border: rgba(255, 255, 255, 0.45);
-      --bg-img: url('achtergrond-pc.jpg');
+      --bg-img: url('media/achtergrond-pc.jpg');
       --splash-ring: rgba(241, 93, 34, 0.26);
       --splash-shadow: rgba(20, 50, 74, 0.25);
     }
@@ -108,7 +108,7 @@
       body {
         background:
           linear-gradient(130deg, rgba(255, 255, 255, 0.2), rgba(13, 42, 66, 0.35)),
-          url('achtergrond-gsm.jpg') center/cover no-repeat;
+          url('media/achtergrond-gsm.jpg') center/cover no-repeat;
         background-attachment: scroll;
       }
 
@@ -492,7 +492,7 @@
 
     function pasAchtergrondAan() {
       const isMobiel = window.matchMedia('(max-width: 900px)').matches;
-      const achtergrondBestand = isMobiel ? 'achtergrond-gsm.jpg' : 'achtergrond-pc.jpg';
+      const achtergrondBestand = isMobiel ? 'media/achtergrond-gsm.jpg' : 'media/achtergrond-pc.jpg';
       const achtergrond = "linear-gradient(130deg, rgba(255, 255, 255, 0.2), rgba(13, 42, 66, 0.35)), url('" + achtergrondBestand + "') center/cover no-repeat";
       const attachment = isMobiel ? 'scroll' : 'fixed';
 
@@ -589,11 +589,11 @@
       }
 
       const pdfPerLocatie = {
-        zwevegem: 'filmcode-zwevegem.pdf',
-        diksmuide: 'filmcode-diksmuide.pdf',
-        alles: 'filmcode-alles-lijnbus.pdf',
-        toerisme: 'filmcode-toerisme.pdf',
-        allesToerisme: 'filmcode-alles-toerisme.pdf'
+        zwevegem: 'media/filmcode-zwevegem.pdf',
+        diksmuide: 'media/filmcode-diksmuide.pdf',
+        alles: 'media/filmcode-alles-lijnbus.pdf',
+        toerisme: 'media/filmcode-toerisme.pdf',
+        allesToerisme: 'media/filmcode-alles-toerisme.pdf'
       };
 
       const pdfBestand = pdfPerLocatie[locatie];
@@ -649,12 +649,12 @@
 <body>
   <div id="pwaSplash" class="pwa-splash" hidden aria-hidden="true">
     <div class="pwa-splash-logo-wrap">
-      <img src="logo.svg" alt="" />
+      <img src="media/logo.svg" alt="" />
     </div>
   </div>
 
   <div class="banner">
-    <img src="logo.svg" alt="bus.be logo" />
+    <img src="media/logo.svg" alt="bus.be logo" />
     <div class="banner-text">
       <a href="https://www.bus.be" target="_blank" rel="noopener noreferrer">bus.be</a>
     </div>

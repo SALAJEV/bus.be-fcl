@@ -1,13 +1,13 @@
-const CACHE_NAME = "busbe-filmcodes-v10";
+const CACHE_NAME = "busbe-filmcodes-v11";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
-  "./favicon.ico",
-  "./logo.svg",
-  "./logo.jpg",
-  "./achtergrond-pc.jpg",
-  "./achtergrond-gsm.jpg"
+  "./media/favicon.ico",
+  "./media/logo.svg",
+  "./media/logo.jpg",
+  "./media/achtergrond-pc.jpg",
+  "./media/achtergrond-gsm.jpg"
 ];
 
 self.addEventListener("message", (event) => {
