@@ -883,19 +883,28 @@
         || (isAndroidChrome && (heeftInstallPromptOndersteuning || androidInstallPromptBeschikbaar));
     }
 
-    function updateInstallatieKaart() {
-      const installatieKaart = document.getElementById('installatieKaart');
-      if (!installatieKaart) {
+    function updateBannerKicker(pwaReedsGeinstalleerd) {
+      const bannerKicker = document.getElementById('bannerKicker');
+      if (!bannerKicker) {
         return;
       }
+      bannerKicker.textContent = pwaReedsGeinstalleerd ? 'Interne app' : 'Interne website';
+    }
 
+    function updateInstallatieKaart() {
       if (isStandalonePwa()) {
         markeerPwaAlsGeinstalleerd();
       }
 
       const pwaReedsGeinstalleerd = isStandalonePwa() || heeftPwaInstallatieVlag();
       const toestelOndersteuntInstallatie = ondersteuntInstallatieOpToestel();
+      const installatieKaart = document.getElementById('installatieKaart');
 
+      updateBannerKicker(pwaReedsGeinstalleerd);
+
+      if (!installatieKaart) {
+        return;
+      }
       installatieKaart.hidden = pwaReedsGeinstalleerd || !toestelOndersteuntInstallatie;
     }
 
@@ -1120,7 +1129,7 @@
     <div class="banner">
       <div class="banner-content">
         <div class="banner-copy">
-          <p class="banner-kicker">Interne website</p>
+          <p id="bannerKicker" class="banner-kicker">Interne website</p>
           <div class="banner-text">
             <a href="https://www.bus.be" target="_blank" rel="noopener noreferrer">bus.be</a>
           </div>
