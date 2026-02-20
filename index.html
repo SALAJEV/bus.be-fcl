@@ -344,6 +344,12 @@
       margin-bottom: 14px;
     }
 
+    .total-action {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--overlay-border);
+    }
+
     .btn-half {
       display: block;
       width: 100%;
@@ -670,7 +676,9 @@
           <button type="button" class="btn" onclick="vraagToegang('zwevegem')">Zwevegem</button>
           <button type="button" class="btn" onclick="vraagToegang('diksmuide')">Diksmuide</button>
         </div>
-        <button type="button" class="btn btn-half btn-total" onclick="vraagToegang('alles')">Alle filmcodes</button>
+        <div class="total-action">
+          <button type="button" class="btn btn-half btn-total" onclick="vraagToegang('alles')">Alle filmcodes (TXT)</button>
+        </div>
       </div>
     </section>
 
@@ -679,7 +687,9 @@
       <p>Hier heb je filmcodelijsten voor de toerisme-bussen.</p>
       <div class="card-actions">
         <button type="button" class="btn btn-half" onclick="vraagToegang('toerisme')">Toerisme bus</button>
-        <button type="button" class="btn btn-half btn-total" onclick="vraagToegang('allesToerisme')">Alle filmcodes toerisme</button>
+        <div class="total-action">
+          <button type="button" class="btn btn-half btn-total" onclick="vraagToegang('allesToerisme')">Alle filmcodes toerisme (TXT)</button>
+        </div>
       </div>
     </section>
   </main>
