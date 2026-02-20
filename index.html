@@ -340,6 +340,13 @@
       outline: none;
     }
 
+    .card-tourism .btn-equal {
+      display: block;
+      width: 100%;
+      max-width: calc((100% - 14px) / 2);
+      margin: 0 auto;
+    }
+
     @media (min-width: 992px) {
       .cards-layout {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -380,6 +387,10 @@
 
       .btn {
         width: 100%;
+      }
+
+      .card-tourism .btn-equal {
+        max-width: 100%;
       }
 
       .install-columns {
@@ -586,10 +597,42 @@
     }
 
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(() => {
+      window.addEventListener('load', async () => {
+        let herlaadGepland = false;
+        const herlaadBijNieuweServiceWorker = () => {
+          if (herlaadGepland) {
+            return;
+          }
+          herlaadGepland = true;
+          window.location.reload();
+        };
+
+        try {
+          const registratie = await navigator.serviceWorker.register('./sw.js');
+          registratie.update().catch(() => {
+            /* update-check faalde; app blijft werken met huidige cache */
+          });
+
+          if (registratie.waiting) {
+            registratie.waiting.postMessage({ type: 'SKIP_WAITING' });
+          }
+
+          registratie.addEventListener('updatefound', () => {
+            const nieuweWorker = registratie.installing;
+            if (!nieuweWorker) {
+              return;
+            }
+            nieuweWorker.addEventListener('statechange', () => {
+              if (nieuweWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                nieuweWorker.postMessage({ type: 'SKIP_WAITING' });
+              }
+            });
+          });
+
+          navigator.serviceWorker.addEventListener('controllerchange', herlaadBijNieuweServiceWorker, { once: true });
+        } catch (_error) {
           /* registratie faalde; pagina blijft werken zonder offline mode */
-        });
+        }
       });
     }
   </script>
@@ -623,7 +666,7 @@
     <section class="card card-tourism">
       <h2>Voor touringcars</h2>
       <p>Hier heb je filmcodelijst voor de toerisme-bussen.</p>
-      <button type="button" class="btn" onclick="vraagToegang('toerisme')">Toerisme bus</button>
+      <button type="button" class="btn btn-equal" onclick="vraagToegang('toerisme')">Toerisme bus</button>
     </section>
   </main>
 
