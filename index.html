@@ -340,13 +340,6 @@
       outline: none;
     }
 
-    .card-tourism .btn-equal {
-      display: block;
-      width: 100%;
-      max-width: calc((100% - 14px) / 2);
-      margin: 0 auto;
-    }
-
     @media (min-width: 992px) {
       .cards-layout {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -387,10 +380,6 @@
 
       .btn {
         width: 100%;
-      }
-
-      .card-tourism .btn-equal {
-        max-width: 100%;
       }
 
       .install-columns {
@@ -584,7 +573,8 @@
         zwevegem: 'filmcode-zwevegem.pdf',
         diksmuide: 'filmcode-diksmuide.pdf',
         alles: 'filmcode-alles-lijnbus.pdf',
-        toerisme: 'filmcode-toerisme.pdf'
+        toerisme: 'filmcode-toerisme.pdf',
+        allesToerisme: 'filmcode-alles-toerisme.pdf'
       };
 
       const pdfBestand = pdfPerLocatie[locatie];
@@ -665,8 +655,11 @@
 
     <section class="card card-tourism">
       <h2>Voor touringcars</h2>
-      <p>Hier heb je filmcodelijst voor de toerisme-bussen.</p>
-      <button type="button" class="btn btn-equal" onclick="vraagToegang('toerisme')">Toerisme bus</button>
+      <p>Hier heb je filmcodelijsten voor de toerisme-bussen.</p>
+      <div class="buttons-grid">
+        <button type="button" class="btn" onclick="vraagToegang('toerisme')">Toerisme bus</button>
+        <button type="button" class="btn" onclick="vraagToegang('allesToerisme')">Alle filmcodes toerisme</button>
+      </div>
     </section>
   </main>
 
