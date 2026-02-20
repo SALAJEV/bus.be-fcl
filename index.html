@@ -6,7 +6,7 @@
   <title>bus.be filmcodelijsten</title>
   <link rel="icon" href="media/favicon.ico" type="image/x-icon" />
   <link rel="manifest" href="manifest.webmanifest" />
-  <meta name="theme-color" content="#f15d22" />
+  <meta name="theme-color" content="#ef5a2a" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -15,30 +15,47 @@
 
   <style>
     :root {
-      --main-orange: #f15d22;
-      --orange-bright: #f3873a;
-      --deep-blue: #14324a;
-      --heading-color: #14324a;
-      --title-accent: #14324a;
-      --text-dark: #1f2933;
-      --text-muted: #4b5b68;
-      --overlay-bg: rgba(255, 255, 255, 0.84);
-      --overlay-border: rgba(255, 255, 255, 0.45);
+      --main-orange: #ef5a2a;
+      --orange-bright: #ff8a3d;
+      --orange-soft: #ffc28e;
+      --deep-blue: #10283d;
+      --heading-color: #10283d;
+      --title-accent: #1f4d73;
+      --text-dark: #172838;
+      --text-muted: #44586c;
+      --overlay-bg: rgba(248, 251, 254, 0.82);
+      --overlay-border: rgba(255, 255, 255, 0.56);
+      --overlay-highlight: rgba(255, 255, 255, 0.68);
+      --disclaimer-bg: rgba(255, 255, 255, 0.78);
+      --disclaimer-border: rgba(16, 40, 61, 0.24);
       --bg-img: url('media/achtergrond-pc.jpg');
-      --splash-ring: rgba(241, 93, 34, 0.26);
-      --splash-shadow: rgba(20, 50, 74, 0.25);
+      --panel-shadow: 0 28px 54px rgba(7, 20, 32, 0.24);
+      --splash-ring: rgba(239, 90, 42, 0.3);
+      --splash-shadow: rgba(16, 40, 61, 0.24);
+      --splash-bg-start: #ffffff;
+      --splash-bg-end: #eef3f8;
+      --splash-card-start: #ffffff;
+      --splash-card-end: #f6f8fb;
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --text-dark: #f4f8fb;
-        --text-muted: #d0dae2;
-        --heading-color: #edf4fa;
-        --title-accent: #dce8f2;
-        --overlay-bg: rgba(10, 18, 27, 0.86);
-        --overlay-border: rgba(198, 218, 233, 0.26);
-        --splash-ring: rgba(20, 50, 74, 0.32);
-        --splash-shadow: rgba(10, 18, 27, 0.34);
+        --text-dark: #edf5fc;
+        --text-muted: #c8d8e5;
+        --heading-color: #f2f8fd;
+        --title-accent: #d7e7f4;
+        --overlay-bg: rgba(9, 18, 28, 0.84);
+        --overlay-border: rgba(174, 203, 224, 0.28);
+        --overlay-highlight: rgba(221, 235, 247, 0.2);
+        --disclaimer-bg: rgba(18, 49, 74, 0.42);
+        --disclaimer-border: rgba(141, 185, 215, 0.34);
+        --panel-shadow: 0 28px 54px rgba(0, 0, 0, 0.42);
+        --splash-ring: rgba(26, 78, 116, 0.32);
+        --splash-shadow: rgba(3, 8, 13, 0.48);
+        --splash-bg-start: #06111b;
+        --splash-bg-end: #0d2234;
+        --splash-card-start: #10283d;
+        --splash-card-end: #1a3c57;
       }
     }
 
@@ -50,21 +67,32 @@
 
     html {
       min-height: 100%;
-      background-color: #14324a;
+      background-color: #0d2437;
     }
 
     body {
-      font-family: 'Avenir Next', 'Montserrat', 'Trebuchet MS', sans-serif;
+      font-family: 'Plus Jakarta Sans', 'Avenir Next', 'Montserrat', 'Trebuchet MS', sans-serif;
       min-height: 100vh;
       min-height: -webkit-fill-available;
       background:
-        linear-gradient(130deg, rgba(255, 255, 255, 0.2), rgba(13, 42, 66, 0.35)),
-        var(--bg-img) center/cover no-repeat;
+        radial-gradient(circle at 12% 20%, rgba(255, 138, 61, 0.3) 0%, rgba(255, 138, 61, 0) 44%),
+        radial-gradient(circle at 86% 82%, rgba(18, 69, 106, 0.36) 0%, rgba(18, 69, 106, 0) 56%),
+        linear-gradient(138deg, rgba(7, 18, 28, 0.62), rgba(8, 24, 39, 0.34)),
+        var(--bg-img) center/cover no-repeat fixed;
       background-attachment: fixed;
       color: var(--text-dark);
-      padding: 28px 18px 46px;
+      padding: 32px 18px 44px;
       position: relative;
       overflow-x: hidden;
+    }
+
+    .layout-shell {
+      width: min(1100px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 20px;
+      position: relative;
+      z-index: 1;
     }
 
     @supports (-webkit-touch-callout: none) {
@@ -84,30 +112,31 @@
       position: fixed;
       z-index: -1;
       border-radius: 50%;
-      filter: blur(4px);
+      filter: blur(6px);
       pointer-events: none;
     }
 
     body::before {
-      width: 400px;
-      height: 400px;
-      top: -120px;
-      right: -120px;
-      background: radial-gradient(circle, rgba(241, 93, 34, 0.32) 0%, rgba(241, 93, 34, 0) 70%);
+      width: 420px;
+      height: 420px;
+      top: -140px;
+      right: -130px;
+      background: radial-gradient(circle, rgba(239, 90, 42, 0.34) 0%, rgba(239, 90, 42, 0) 68%);
     }
 
     body::after {
-      width: 300px;
-      height: 300px;
-      bottom: -90px;
+      width: 340px;
+      height: 340px;
+      bottom: -120px;
       left: -90px;
-      background: radial-gradient(circle, rgba(20, 50, 74, 0.28) 0%, rgba(20, 50, 74, 0) 70%);
+      background: radial-gradient(circle, rgba(24, 79, 121, 0.28) 0%, rgba(24, 79, 121, 0) 72%);
     }
 
     @media (max-width: 900px) {
       body {
         background:
-          linear-gradient(130deg, rgba(255, 255, 255, 0.2), rgba(13, 42, 66, 0.35)),
+          radial-gradient(circle at 18% 18%, rgba(255, 138, 61, 0.26) 0%, rgba(255, 138, 61, 0) 38%),
+          linear-gradient(138deg, rgba(8, 20, 31, 0.6), rgba(9, 25, 40, 0.36)),
           url('media/achtergrond-gsm.jpg') center/cover no-repeat;
         background-attachment: scroll;
       }
@@ -120,21 +149,60 @@
     }
 
     .banner {
-      width: min(900px, 100%);
-      margin: 0 auto;
+      width: 100%;
       min-height: 220px;
-      background-color: var(--overlay-bg);
+      background:
+        linear-gradient(158deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 42%),
+        var(--overlay-bg);
       border: 1px solid var(--overlay-border);
-      backdrop-filter: blur(12px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 30px 24px 26px;
-      border-radius: 26px;
-      box-shadow: 0 24px 50px rgba(14, 24, 33, 0.2);
+      backdrop-filter: blur(14px) saturate(130%);
+      padding: clamp(20px, 2.4vw, 30px);
+      border-radius: 30px;
+      box-shadow: var(--panel-shadow);
+      position: relative;
+      overflow: hidden;
       animation: fade-up 500ms ease-out;
+    }
+
+    .banner::before {
+      display: none;
+    }
+
+    .banner::after {
+      content: '';
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      top: 0;
+      height: 3px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--main-orange), var(--orange-bright), rgba(255, 194, 142, 0.5));
+      pointer-events: none;
+    }
+
+    .banner-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .banner-copy {
+      display: grid;
+      gap: 10px;
+      text-align: left;
+      justify-items: start;
+    }
+
+    .banner-mark {
+      width: 148px;
+      aspect-ratio: 1;
+      border-radius: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.86);
+      background: #ffffff;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 14px 28px rgba(10, 24, 36, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.65);
     }
 
     .pwa-splash {
@@ -143,7 +211,7 @@
       z-index: 9999;
       display: none;
       place-items: center;
-      background: #ffffff;
+      background: linear-gradient(180deg, var(--splash-bg-start), var(--splash-bg-end));
       opacity: 0;
       visibility: hidden;
       transition: opacity 320ms ease, visibility 320ms ease;
@@ -172,7 +240,7 @@
       width: min(180px, 46vw);
       aspect-ratio: 1;
       border-radius: 26px;
-      background: #ffffff;
+      background: linear-gradient(180deg, var(--splash-card-start), var(--splash-card-end));
       border: 1px solid var(--splash-ring);
       display: grid;
       place-items: center;
@@ -187,24 +255,37 @@
     }
 
     .banner img {
-      width: 120px;
+      width: 96px;
       height: auto;
-      margin-bottom: 14px;
-      background-color: white;
-      padding: 12px;
-      border-radius: 14px;
-      box-shadow: 0 8px 18px rgba(20, 50, 74, 0.22);
+      margin: 0;
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .banner-kicker {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(16, 40, 61, 0.08);
+      color: var(--title-accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
     }
 
     .banner-text {
       font-size: clamp(1.4rem, 2vw + 0.9rem, 2.1rem);
       font-weight: 800;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.018em;
+      line-height: 1.1;
     }
 
     .banner-text a {
       color: var(--main-orange);
       text-decoration: none;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
     }
 
     .banner-text::after {
@@ -213,57 +294,141 @@
     }
 
     .banner-description {
-      margin-top: 10px;
-      max-width: 720px;
+      max-width: 680px;
       color: var(--text-muted);
       font-size: clamp(0.95rem, 0.35vw + 0.9rem, 1.08rem);
-      line-height: 1.45;
-      text-align: center;
+      line-height: 1.5;
+      text-align: left;
     }
 
     .cards-layout {
-      max-width: 1040px;
-      margin: 24px auto 0;
+      width: 100%;
       display: grid;
       grid-template-columns: 1fr;
-      gap: 16px;
+      gap: 20px;
     }
 
     .card {
       padding: 34px 26px;
-      background-color: var(--overlay-bg);
+      background:
+        linear-gradient(160deg, var(--overlay-highlight), rgba(255, 255, 255, 0)),
+        var(--overlay-bg);
       border: 1px solid var(--overlay-border);
       border-radius: 26px;
-      box-shadow: 0 24px 50px rgba(14, 24, 33, 0.2);
+      box-shadow: var(--panel-shadow);
       text-align: center;
       animation: fade-up 650ms ease-out both;
+      position: relative;
+      overflow: hidden;
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      top: 0;
+      height: 3px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, rgba(255, 138, 61, 0.8), rgba(20, 85, 133, 0.55));
+      pointer-events: none;
+    }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      right: -90px;
+      top: -120px;
+      background: radial-gradient(circle, rgba(255, 194, 142, 0.28) 0%, rgba(255, 194, 142, 0) 72%);
+      opacity: 0;
+      transition: opacity 220ms ease;
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 30px 54px rgba(7, 20, 32, 0.26);
+      border-color: rgba(255, 255, 255, 0.72);
+    }
+
+    .card:hover::after {
+      opacity: 1;
+    }
+
+    .card-main {
       animation-delay: 120ms;
+    }
+
+    .card-tourism {
+      animation-delay: 210ms;
     }
 
     .card h2 {
       color: var(--heading-color);
       font-size: clamp(1.3rem, 1.4vw + 0.8rem, 1.9rem);
-      margin-bottom: 12px;
-      letter-spacing: 0.01em;
+      margin-bottom: 10px;
+      letter-spacing: 0.015em;
     }
 
     .card p {
       color: var(--text-muted);
       font-size: clamp(1rem, 0.35vw + 0.95rem, 1.15rem);
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       line-height: 1.55;
     }
 
     .install-guide {
-      max-width: 1040px;
-      margin: 18px auto 0;
+      width: 100%;
       padding: 24px 22px;
-      background-color: var(--overlay-bg);
+      background:
+        linear-gradient(160deg, var(--overlay-highlight), rgba(255, 255, 255, 0)),
+        var(--overlay-bg);
       border: 1px solid var(--overlay-border);
       border-radius: 22px;
-      box-shadow: 0 18px 38px rgba(14, 24, 33, 0.18);
+      box-shadow: 0 22px 40px rgba(7, 20, 32, 0.2);
       animation: fade-up 750ms ease-out both;
-      animation-delay: 180ms;
+      animation-delay: 290ms;
+    }
+
+    .page-disclaimer {
+      width: 100%;
+      padding: 16px 18px;
+      border-radius: 16px;
+      border: 1px solid var(--disclaimer-border);
+      background-color: rgba(255, 255, 255, 0.78);
+      background: var(--disclaimer-bg);
+      color: var(--text-dark);
+      line-height: 1.5;
+      font-size: 0.9rem;
+      box-shadow: 0 12px 28px rgba(7, 20, 32, 0.16);
+      animation: fade-up 860ms ease-out both;
+      animation-delay: 340ms;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-disclaimer strong {
+      color: var(--heading-color);
+      letter-spacing: 0.01em;
+    }
+
+    .page-disclaimer p {
+      margin-top: 6px;
+    }
+
+    .page-disclaimer::before {
+      content: '';
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      top: 0;
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--main-orange), rgba(255, 194, 142, 0.6));
+      pointer-events: none;
     }
 
     .install-guide h2 {
@@ -290,7 +455,8 @@
       padding: 14px 14px 12px;
       border: 1px solid var(--overlay-border);
       border-radius: 14px;
-      background: rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.25);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
     }
 
     .install-platform h3 {
@@ -321,23 +487,46 @@
       background: linear-gradient(135deg, var(--main-orange), var(--orange-bright));
       color: white;
       padding: 14px 18px;
-      min-height: 44px;
-      border: none;
-      font-size: 16px;
+      min-height: 46px;
+      border: 1px solid rgba(255, 219, 193, 0.46);
+      font-size: 15.5px;
       font-weight: 700;
-      letter-spacing: 0.01em;
-      border-radius: 12px;
+      letter-spacing: 0.008em;
+      border-radius: 16px;
+      font-family: inherit;
       cursor: pointer;
-      transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
-      box-shadow: 0 10px 22px rgba(241, 93, 34, 0.32);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+      box-shadow: 0 12px 24px rgba(239, 90, 42, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.24);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 1px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0));
+      pointer-events: none;
+      z-index: -1;
     }
 
     .btn:hover,
     .btn:focus-visible {
       transform: translateY(-2px);
-      box-shadow: 0 14px 28px rgba(241, 93, 34, 0.38);
-      filter: saturate(1.08);
-      outline: none;
+      box-shadow: 0 16px 30px rgba(239, 90, 42, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.24);
+      filter: saturate(1.06);
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid rgba(255, 255, 255, 0.9);
+      outline-offset: 2px;
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 18px rgba(239, 90, 42, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.24);
     }
 
     .card-actions .buttons-grid {
@@ -361,6 +550,123 @@
       margin-top: 10px;
     }
 
+    body.pdf-viewer-open {
+      overflow: hidden;
+    }
+
+    .pdf-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9500;
+      display: none;
+      place-items: center;
+      padding: 16px;
+      background: rgba(6, 14, 22, 0.62);
+      backdrop-filter: blur(5px);
+    }
+
+    .pdf-overlay.is-visible {
+      display: grid;
+    }
+
+    .pdf-panel {
+      width: min(1180px, 100%);
+      height: min(92vh, 980px);
+      border-radius: 20px;
+      border: 1px solid var(--overlay-border);
+      background:
+        linear-gradient(160deg, var(--overlay-highlight), rgba(255, 255, 255, 0)),
+        var(--overlay-bg);
+      box-shadow: 0 26px 48px rgba(4, 14, 22, 0.45);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      overflow: hidden;
+    }
+
+    .pdf-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px;
+      border-bottom: 1px solid var(--overlay-border);
+    }
+
+    .pdf-title {
+      font-size: clamp(1rem, 0.6vw + 0.9rem, 1.25rem);
+      color: var(--heading-color);
+      line-height: 1.2;
+    }
+
+    .pdf-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pdf-download {
+      background: linear-gradient(135deg, var(--main-orange), var(--orange-bright));
+      border: 1px solid rgba(255, 219, 193, 0.46);
+      color: #ffffff;
+      text-decoration: none;
+      box-shadow: 0 10px 20px rgba(239, 90, 42, 0.34);
+    }
+
+    .pdf-download:visited {
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .pdf-download:hover,
+    .pdf-download:focus-visible,
+    .pdf-download:active {
+      text-decoration: none;
+      box-shadow: 0 14px 26px rgba(239, 90, 42, 0.4);
+      filter: saturate(1.06);
+    }
+
+    .btn-soft {
+      background: rgba(16, 40, 61, 0.18);
+      border: 1px solid var(--overlay-border);
+      color: var(--text-dark);
+      box-shadow: none;
+    }
+
+    .btn-soft:hover,
+    .btn-soft:focus-visible,
+    .btn-soft:active {
+      background: rgba(16, 40, 61, 0.24);
+      box-shadow: none;
+      filter: none;
+    }
+
+    .btn-close {
+      width: 40px;
+      min-width: 40px;
+      height: 40px;
+      min-height: 40px;
+      padding: 0;
+      border-radius: 999px;
+      font-size: 1.08rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .pdf-actions .btn {
+      width: auto;
+      min-height: 40px;
+      padding: 10px 14px;
+    }
+
+    .pdf-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #ffffff;
+    }
+
     @media (min-width: 992px) {
       .cards-layout {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -380,19 +686,52 @@
 
     @media (max-width: 767px) {
       body {
-        padding: 18px 14px 30px;
+        padding: 14px 12px 24px;
+        padding-bottom: max(24px, env(safe-area-inset-bottom));
+      }
+
+      .layout-shell {
+        gap: 14px;
       }
 
       .banner {
-        min-height: 180px;
+        min-height: 182px;
         border-radius: 20px;
-        box-shadow: 0 16px 30px rgba(14, 24, 33, 0.16);
+        box-shadow: 0 16px 34px rgba(8, 20, 32, 0.18);
+      }
+
+      .banner-content {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .banner-copy {
+        justify-items: center;
+        text-align: center;
+      }
+
+      .banner-description {
+        text-align: center;
+      }
+
+      .banner-mark {
+        margin-inline: auto;
+        width: 120px;
+        border-radius: 20px;
+      }
+
+      .banner img {
+        width: 76px;
+      }
+
+      .banner-kicker {
+        font-size: 0.72rem;
       }
 
       .card {
-        padding: 26px 16px;
+        padding: 24px 14px;
         border-radius: 20px;
-        box-shadow: 0 14px 30px rgba(14, 24, 33, 0.16);
+        box-shadow: 0 14px 30px rgba(8, 20, 32, 0.17);
       }
 
       .buttons-grid {
@@ -401,6 +740,8 @@
 
       .btn {
         width: 100%;
+        min-height: 50px;
+        font-size: 16px;
       }
 
       .btn-half {
@@ -412,7 +753,75 @@
       }
 
       .install-guide {
-        padding: 18px 14px;
+        padding: 16px 12px;
+      }
+
+      .page-disclaimer {
+        padding: 14px 12px;
+        border-radius: 14px;
+        font-size: 0.84rem;
+      }
+
+      .pdf-overlay {
+        padding: 0;
+        background: rgba(6, 14, 22, 0.76);
+      }
+
+      .pdf-panel {
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        max-height: none;
+        border-radius: 0;
+        border: none;
+      }
+
+      .pdf-toolbar {
+        flex-direction: row;
+        align-items: center;
+        padding: calc(8px + env(safe-area-inset-top)) 10px 10px;
+      }
+
+      .pdf-title {
+        max-width: 62vw;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .pdf-actions {
+        justify-content: flex-end;
+        flex-wrap: nowrap;
+        gap: 6px;
+      }
+
+      .pdf-actions .btn {
+        width: auto;
+      }
+
+      .pdf-download {
+        min-height: 36px;
+        padding: 8px 12px;
+        font-size: 0.88rem;
+      }
+
+      .btn-close {
+        width: 36px;
+        min-width: 36px;
+        height: 36px;
+        min-height: 36px;
+        font-size: 1rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 1ms !important;
+        scroll-behavior: auto !important;
       }
     }
 
@@ -499,16 +908,7 @@
     function pasAchtergrondAan() {
       const isMobiel = window.matchMedia('(max-width: 900px)').matches;
       const achtergrondBestand = isMobiel ? 'media/achtergrond-gsm.jpg' : 'media/achtergrond-pc.jpg';
-      const achtergrond = "linear-gradient(130deg, rgba(255, 255, 255, 0.2), rgba(13, 42, 66, 0.35)), url('" + achtergrondBestand + "') center/cover no-repeat";
-      const attachment = isMobiel ? 'scroll' : 'fixed';
-
-      document.documentElement.style.background = achtergrond;
-      document.documentElement.style.backgroundAttachment = attachment;
-      document.documentElement.style.backgroundColor = '#14324a';
-
-      document.body.style.background = achtergrond;
-      document.body.style.backgroundAttachment = attachment;
-      document.body.style.backgroundColor = '#14324a';
+      document.documentElement.style.setProperty('--bg-img', "url('" + achtergrondBestand + "')");
     }
 
     function toonPwaStartanimatie() {
@@ -562,6 +962,13 @@
     });
 
     const TOEGANG_OPGESLAGEN_SLEUTEL = 'busbe_filmcodelijsten_toegang_ok';
+    const PDF_PER_LOCATIE = {
+      zwevegem: { titel: 'Filmcodes Zwevegem', bestand: 'media/filmcode-zwevegem.pdf' },
+      diksmuide: { titel: 'Filmcodes Diksmuide', bestand: 'media/filmcode-diksmuide.pdf' },
+      alles: { titel: 'Alle filmcodes lijnbussen (TXT)', bestand: 'media/filmcode-alles-lijnbus.pdf' },
+      toerisme: { titel: 'Filmcodes toerisme', bestand: 'media/filmcode-toerisme.pdf' },
+      allesToerisme: { titel: 'Alle filmcodes touringcars (TXT)', bestand: 'media/filmcode-alles-toerisme.pdf' }
+    };
 
     function heeftOpgeslagenToegang() {
       try {
@@ -569,6 +976,66 @@
       } catch (_error) {
         return false;
       }
+    }
+
+    function sluitPdfOverlay() {
+      const overlay = document.getElementById('pdfOverlay');
+      const frame = document.getElementById('pdfFrame');
+      if (!overlay || !frame) {
+        return;
+      }
+
+      overlay.classList.remove('is-visible');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('pdf-viewer-open');
+
+      window.setTimeout(() => {
+        overlay.hidden = true;
+        frame.removeAttribute('src');
+      }, 120);
+    }
+
+    function openPdfOverlay(gekozenPdf) {
+      const overlay = document.getElementById('pdfOverlay');
+      const frame = document.getElementById('pdfFrame');
+      const titel = document.getElementById('pdfTitel');
+      const downloadKnop = document.getElementById('pdfDownloadKnop');
+      if (!overlay || !frame || !titel || !downloadKnop) {
+        return;
+      }
+
+      const weergaveUrl = gekozenPdf.bestand + '#view=FitH';
+      titel.textContent = gekozenPdf.titel;
+      downloadKnop.href = gekozenPdf.bestand;
+      downloadKnop.setAttribute('download', gekozenPdf.bestand.split('/').pop() || 'filmcodes.pdf');
+      frame.setAttribute('src', weergaveUrl);
+
+      overlay.hidden = false;
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('pdf-viewer-open');
+      requestAnimationFrame(() => {
+        overlay.classList.add('is-visible');
+      });
+    }
+
+    function initialiseerPdfOverlay() {
+      const overlay = document.getElementById('pdfOverlay');
+      const sluitKnop = document.getElementById('pdfSluitKnop');
+      if (!overlay || !sluitKnop) {
+        return;
+      }
+
+      sluitKnop.addEventListener('click', sluitPdfOverlay);
+      overlay.addEventListener('click', (event) => {
+        if (event.target === overlay) {
+          sluitPdfOverlay();
+        }
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && overlay.classList.contains('is-visible')) {
+          sluitPdfOverlay();
+        }
+      });
     }
 
     function slaToegangOp() {
@@ -594,21 +1061,13 @@
         slaToegangOp();
       }
 
-      const pdfPerLocatie = {
-        zwevegem: 'media/filmcode-zwevegem.pdf',
-        diksmuide: 'media/filmcode-diksmuide.pdf',
-        alles: 'media/filmcode-alles-lijnbus.pdf',
-        toerisme: 'media/filmcode-toerisme.pdf',
-        allesToerisme: 'media/filmcode-alles-toerisme.pdf'
-      };
-
-      const pdfBestand = pdfPerLocatie[locatie];
-      if (!pdfBestand) {
+      const gekozenPdf = PDF_PER_LOCATIE[locatie];
+      if (!gekozenPdf) {
         alert("Onbekende lijst geselecteerd.");
         return;
       }
 
-      window.location.href = pdfBestand;
+      openPdfOverlay(gekozenPdf);
     }
 
     if ('serviceWorker' in navigator) {
@@ -650,6 +1109,8 @@
         }
       });
     }
+
+    window.addEventListener('DOMContentLoaded', initialiseerPdfOverlay);
   </script>
 </head>
 <body>
@@ -659,65 +1120,92 @@
     </div>
   </div>
 
-  <div class="banner">
-    <img src="media/logo.svg" alt="bus.be logo" />
-    <div class="banner-text">
-      <a href="https://www.bus.be" target="_blank" rel="noopener noreferrer">bus.be</a>
+  <div class="layout-shell">
+    <div class="banner">
+      <div class="banner-content">
+        <div class="banner-copy">
+          <p class="banner-kicker">Interne website</p>
+          <div class="banner-text">
+            <a href="https://www.bus.be" target="_blank" rel="noopener noreferrer">bus.be</a>
+          </div>
+          <p class="banner-description">Op deze site vind je de actuele filmcodelijsten voor lijnbussen en toerismebussen van bus.be, per stelplaats en gebruik.</p>
+        </div>
+        <div class="banner-mark">
+          <img src="media/logo.svg" alt="bus.be logo" />
+        </div>
+      </div>
     </div>
-    <p class="banner-description">Op deze site vind je de actuele filmcodelijsten voor lijnbussen en toerismebussen van bus.be, per stelplaats en gebruik.</p>
+
+    <main class="cards-layout">
+      <section class="card card-main">
+        <h2>Voor lijnbussen</h2>
+        <p>Kies hier je eigen stelplaats.</p>
+        <div class="card-actions">
+          <div class="buttons-grid">
+            <button type="button" class="btn" onclick="vraagToegang('zwevegem')">Zwevegem</button>
+            <button type="button" class="btn" onclick="vraagToegang('diksmuide')">Diksmuide</button>
+          </div>
+          <div class="total-action">
+            <button type="button" class="btn btn-half btn-total" onclick="vraagToegang('alles')">Alle filmcodes (TXT)</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card card-tourism">
+        <h2>Voor touringcars</h2>
+        <p>Hier heb je filmcodelijsten voor de toerisme-bussen.</p>
+        <div class="card-actions">
+          <button type="button" class="btn btn-half" onclick="vraagToegang('toerisme')">Toerisme</button>
+          <div class="total-action">
+            <button type="button" class="btn btn-half btn-total" onclick="vraagToegang('allesToerisme')">Alle filmcodes (TXT)</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <section id="installatieKaart" class="install-guide" aria-labelledby="installatieTitel">
+      <h2 id="installatieTitel">App installeren op smartphone</h2>
+      <p class="install-intro">Zo voeg je deze webapp toe aan je startscherm op iPhone of Android.</p>
+      <div class="install-columns">
+        <article class="install-platform">
+          <h3>iPhone (Safari)</h3>
+          <ol>
+            <li>Open deze website in Safari.</li>
+            <li>Tik onderaan op <strong>Deel</strong> (vierkant met pijl omhoog).</li>
+            <li>Kies <strong>Zet op beginscherm</strong>.</li>
+            <li>Tik op <strong>Voeg toe</strong>.</li>
+          </ol>
+        </article>
+        <article class="install-platform">
+          <h3>Android (Chrome)</h3>
+          <ol>
+            <li>Open deze website in Chrome.</li>
+            <li>Tik rechtsboven op het menu (drie puntjes).</li>
+            <li>Kies <strong>App installeren</strong> of <strong>Toevoegen aan startscherm</strong>.</li>
+            <li>Bevestig met <strong>Installeren</strong> of <strong>Toevoegen</strong>.</li>
+          </ol>
+        </article>
+      </div>
+    </section>
+
+    <section class="page-disclaimer" aria-label="Disclaimer">
+      <strong>Disclaimer</strong>
+      <p>De informatie op deze pagina is uitsluitend bedoeld voor intern gebruik binnen bus.be. Deze gegevens mogen niet openbaar worden gemaakt, verspreid, gekopieerd of gedeeld met derden zonder uitdrukkelijke toestemming van bus.be.</p>
+    </section>
   </div>
 
-  <main class="cards-layout">
-    <section class="card card-main">
-      <h2>Voor lijnbussen</h2>
-      <p>Kies hier je eigen stelplaats.</p>
-      <div class="card-actions">
-        <div class="buttons-grid">
-          <button type="button" class="btn" onclick="vraagToegang('zwevegem')">Zwevegem</button>
-          <button type="button" class="btn" onclick="vraagToegang('diksmuide')">Diksmuide</button>
+  <div id="pdfOverlay" class="pdf-overlay" hidden aria-hidden="true">
+    <section class="pdf-panel" role="dialog" aria-modal="true" aria-labelledby="pdfTitel">
+      <header class="pdf-toolbar">
+        <h2 id="pdfTitel" class="pdf-title">Filmcodelijst</h2>
+        <div class="pdf-actions">
+          <a id="pdfDownloadKnop" class="btn pdf-download" href="./" download>Download</a>
+          <button id="pdfSluitKnop" type="button" class="btn btn-soft btn-close" aria-label="Sluiten">&#10005;</button>
         </div>
-        <div class="total-action">
-          <button type="button" class="btn btn-half btn-total" onclick="vraagToegang('alles')">Alle filmcodes (TXT)</button>
-        </div>
-      </div>
+      </header>
+      <iframe id="pdfFrame" class="pdf-frame" title="PDF weergave"></iframe>
     </section>
-
-    <section class="card card-tourism">
-      <h2>Voor touringcars</h2>
-      <p>Hier heb je filmcodelijsten voor de toerisme-bussen.</p>
-      <div class="card-actions">
-        <button type="button" class="btn btn-half" onclick="vraagToegang('toerisme')">Toerisme bus</button>
-        <div class="total-action">
-          <button type="button" class="btn btn-half btn-total" onclick="vraagToegang('allesToerisme')">Alle filmcodes (TXT)</button>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <section id="installatieKaart" class="install-guide" aria-labelledby="installatieTitel">
-    <h2 id="installatieTitel">App installeren op smartphone</h2>
-    <p class="install-intro">Zo voeg je deze webapp toe aan je startscherm op iPhone of Android.</p>
-    <div class="install-columns">
-      <article class="install-platform">
-        <h3>iPhone (Safari)</h3>
-        <ol>
-          <li>Open deze website in Safari.</li>
-          <li>Tik onderaan op <strong>Deel</strong> (vierkant met pijl omhoog).</li>
-          <li>Kies <strong>Zet op beginscherm</strong>.</li>
-          <li>Tik op <strong>Voeg toe</strong>.</li>
-        </ol>
-      </article>
-      <article class="install-platform">
-        <h3>Android (Chrome)</h3>
-        <ol>
-          <li>Open deze website in Chrome.</li>
-          <li>Tik rechtsboven op het menu (drie puntjes).</li>
-          <li>Kies <strong>App installeren</strong> of <strong>Toevoegen aan startscherm</strong>.</li>
-          <li>Bevestig met <strong>Installeren</strong> of <strong>Toevoegen</strong>.</li>
-        </ol>
-      </article>
-    </div>
-  </section>
+  </div>
 
 </body>
 </html>
