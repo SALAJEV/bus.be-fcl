@@ -419,9 +419,53 @@
   </style>
 
   <script>
+    const PWA_GEINSTALLEERD_SLEUTEL = 'busbe_filmcodelijsten_pwa_geinstalleerd';
+
     function isStandalonePwa() {
       return window.matchMedia('(display-mode: standalone)').matches
         || window.navigator.standalone === true;
+    }
+
+    function heeftPwaInstallatieVlag() {
+      try {
+        return window.localStorage.getItem(PWA_GEINSTALLEERD_SLEUTEL) === '1';
+      } catch (_error) {
+        return false;
+      }
+    }
+
+    function markeerPwaAlsGeinstalleerd() {
+      try {
+        window.localStorage.setItem(PWA_GEINSTALLEERD_SLEUTEL, '1');
+      } catch (_error) {
+        /* als storage niet beschikbaar is, blijft de app gewoon werken */
+      }
+    }
+
+    function ondersteuntInstallatieOpToestel() {
+      const userAgent = window.navigator.userAgent || '';
+      const isIosToestel = /iPad|iPhone|iPod/i.test(userAgent);
+      const isSafari = /Safari/i.test(userAgent) && !/CriOS|FxiOS|EdgiOS|OPiOS|Android/i.test(userAgent);
+      const isAndroidToestel = /Android/i.test(userAgent);
+      const heeftInstallPromptOndersteuning = 'onbeforeinstallprompt' in window;
+
+      return (isIosToestel && isSafari) || (isAndroidToestel && heeftInstallPromptOndersteuning);
+    }
+
+    function updateInstallatieKaart() {
+      const installatieKaart = document.getElementById('installatieKaart');
+      if (!installatieKaart) {
+        return;
+      }
+
+      if (isStandalonePwa()) {
+        markeerPwaAlsGeinstalleerd();
+      }
+
+      const pwaReedsGeinstalleerd = isStandalonePwa() || heeftPwaInstallatieVlag();
+      const toestelOndersteuntInstallatie = ondersteuntInstallatieOpToestel();
+
+      installatieKaart.hidden = pwaReedsGeinstalleerd || !toestelOndersteuntInstallatie;
     }
 
     function pasAchtergrondAan() {
@@ -475,9 +519,14 @@
     window.addEventListener('DOMContentLoaded', () => {
       pasAchtergrondAan();
       toonPwaStartanimatie();
+      updateInstallatieKaart();
     });
     window.addEventListener('resize', pasAchtergrondAan);
     window.addEventListener('orientationchange', pasAchtergrondAan);
+    window.addEventListener('appinstalled', () => {
+      markeerPwaAlsGeinstalleerd();
+      updateInstallatieKaart();
+    });
 
     const TOEGANG_OPGESLAGEN_SLEUTEL = 'busbe_filmcodelijsten_toegang_ok';
 
@@ -570,7 +619,7 @@
     </section>
   </main>
 
-  <section class="install-guide" aria-labelledby="installatieTitel">
+  <section id="installatieKaart" class="install-guide" aria-labelledby="installatieTitel">
     <h2 id="installatieTitel">App installeren op smartphone</h2>
     <p class="install-intro">Zo voeg je deze webapp toe aan je startscherm op iPhone of Android.</p>
     <div class="install-columns">
