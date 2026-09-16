@@ -1373,40 +1373,20 @@
         zoekToegangGecontroleerd = true;
         return true;
       }
-      return false;
-    }
 
-    function updateZoektoegang() {
-      const lock = document.getElementById('searchLock');
-      const invoer = document.getElementById('routeSearchInput');
-      if (!lock || !invoer) {
-        return;
+      const code = prompt("Voer toegangscode in om de zoekfunctie te gebruiken:");
+      if (code === null) {
+        return false;
       }
 
-      const toegang = controleerZoektoegang();
-      lock.hidden = toegang;
-      invoer.disabled = !toegang;
-    }
-
-    function ontgrendelZoeken() {
-      const codeveld = document.getElementById('searchAccessInput');
-      const melding = document.getElementById('searchLockMessage');
-      if (!codeveld || !melding) {
-        return;
-      }
-
-      if (codeveld.value.trim() !== '550524') {
-        melding.textContent = 'Verkeerde toegangscode.';
-        codeveld.select();
-        return;
+      if (code.trim() !== "550524") {
+        alert("Toegang geweigerd: verkeerde code.");
+        return false;
       }
 
       slaToegangOp();
       zoekToegangGecontroleerd = true;
-      codeveld.value = '';
-      melding.textContent = '';
-      updateZoektoegang();
-      document.getElementById('routeSearchInput')?.focus();
+      return true;
     }
 
     function toonGeselecteerdeRit(rit) {
@@ -1640,7 +1620,6 @@
           .slice(1)
           .map(maakZoekrecord)
           .filter(Boolean);
-        updateZoektoegang();
       } catch (_error) {
         invoer.disabled = true;
       }
@@ -1657,13 +1636,6 @@
         document.body.append(resultaten);
       }
 
-      document.getElementById('searchAccessButton')?.addEventListener('click', ontgrendelZoeken);
-      document.getElementById('searchAccessInput')?.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-          event.preventDefault();
-          ontgrendelZoeken();
-        }
-      });
       invoer.addEventListener('input', () => {
         if (!controleerZoektoegang()) {
           invoer.value = '';
@@ -1818,12 +1790,7 @@
       <h2 id="zoekFilmcodeTitel">Zoek filmcodes</h2>
       <p class="search-help">Typ een lijnnummer, bestemming of filmcode. Kies daarna een resultaat om de bestemming en filmcode te bekijken.</p>
       <div class="route-search">
-        <div id="searchLock" class="search-lock">
-          <input id="searchAccessInput" type="password" placeholder="Toegangscode" autocomplete="current-password" aria-label="Toegangscode voor zoekfunctie" />
-          <button id="searchAccessButton" type="button">Ontgrendelen</button>
-          <p id="searchLockMessage" class="search-lock-message" role="status" aria-live="polite"></p>
-        </div>
-        <input id="routeSearchInput" type="search" placeholder="Zoek op lijnnummer, bestemming, filmcode of lijncode." autocomplete="off" disabled />
+        <input id="routeSearchInput" type="search" placeholder="Zoek op lijnnummer, bestemming, filmcode of lijncode." autocomplete="off" />
         <div id="routeSelection" class="route-selection" aria-live="polite"></div>
         <div id="routeResults" class="route-results" aria-live="polite"></div>
       </div>
