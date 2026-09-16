@@ -1,4 +1,4 @@
-const CACHE_NAME = "busbe-filmcodes-v15";
+const CACHE_NAME = "busbe-filmcodes-v22";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -7,18 +7,13 @@ const APP_SHELL = [
   "./media/logo.svg",
   "./media/logo.jpg",
   "./media/achtergrond-pc.jpg",
-  "./media/achtergrond-gsm.jpg"
+  "./media/achtergrond-gsm.jpg",
+  "./media/zoek-data.json"
 ];
-
-self.addEventListener("message", (event) => {
-  if (event.data && event.data.type === "SKIP_WAITING") {
-    self.skipWaiting();
-  }
-});
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)).then(() => self.skipWaiting())
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL))
   );
 });
 
@@ -30,7 +25,7 @@ self.addEventListener("activate", (event) => {
           .filter((key) => key !== CACHE_NAME)
           .map((key) => caches.delete(key))
       )
-    ).then(() => self.clients.claim())
+    )
   );
 });
 
