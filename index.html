@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="nl">
 <head>
   <meta charset="UTF-8" />
@@ -20,32 +20,15 @@
       --main-orange: #d86b3f;
       --orange-bright: #ed9a5a;
       --deep-blue: #123247;
-      --heading-color: #123247;
-      --title-accent: #1f6070;
-      --text-dark: #193244;
-      --text-muted: #4d6470;
-      --overlay-bg: rgba(226, 238, 241, 0.82);
-      --overlay-border: rgba(247, 252, 252, 0.62);
-      --overlay-highlight: rgba(255, 255, 255, 0.52);
-      --disclaimer-bg: rgba(214, 229, 233, 0.8);
-      --disclaimer-border: rgba(18, 50, 71, 0.22);
+      --heading-color: #f1f7fb;
+      --text-color: #edf5fb;
+      --muted: rgba(237, 245, 251, 0.8);
+      --panel: rgba(14, 28, 39, 0.68);
+      --panel-strong: rgba(11, 25, 35, 0.82);
+      --panel-border: rgba(255, 255, 255, 0.12);
       --bg-img: url('media/achtergrond-pc.jpg');
-      --panel-shadow: 0 18px 38px rgba(7, 28, 40, 0.2);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --text-dark: #edf5fc;
-        --text-muted: #c8d8e5;
-        --heading-color: #f2f8fd;
-        --title-accent: #b7dbe4;
-        --overlay-bg: rgba(9, 25, 37, 0.86);
-        --overlay-border: rgba(174, 203, 224, 0.28);
-        --overlay-highlight: rgba(221, 235, 247, 0.16);
-        --disclaimer-bg: rgba(18, 49, 74, 0.48);
-        --disclaimer-border: rgba(141, 185, 215, 0.34);
-        --panel-shadow: 0 20px 42px rgba(0, 0, 0, 0.42);
-      }
+      --shadow: 0 18px 34px rgba(3, 13, 21, 0.26);
+      color-scheme: dark;
     }
 
     * {
@@ -56,407 +39,305 @@
 
     html {
       min-height: 100%;
-      background-color: #0d2437;
+      background: #0d2437;
       font-family: var(--ui-font);
     }
 
+    body,
     button,
     input,
     select,
     textarea {
-      font-family: inherit;
+      font-family: var(--ui-font);
     }
 
     body {
-      font-family: var(--ui-font);
       min-height: 100vh;
-      min-height: -webkit-fill-available;
       background:
-        radial-gradient(circle at 12% 20%, rgba(179, 213, 225, 0.22) 0%, rgba(179, 213, 225, 0) 44%),
-        radial-gradient(circle at 86% 82%, rgba(18, 69, 106, 0.36) 0%, rgba(18, 69, 106, 0) 56%),
-        linear-gradient(138deg, rgba(7, 18, 28, 0.62), rgba(8, 24, 39, 0.34)),
-        var(--bg-img) center/cover no-repeat fixed;
-      background-attachment: fixed;
-      color: var(--text-dark);
-      padding: 32px 18px 44px;
-      position: relative;
+        linear-gradient(135deg, rgba(8, 20, 31, 0.72), rgba(8, 20, 31, 0.34)),
+        var(--bg-img) center center / cover no-repeat fixed;
+      color: var(--text-color);
+      padding: 16px 12px 32px;
       overflow-x: hidden;
-      text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
-    }
-
-    .layout-shell {
-      width: min(1100px, 100%);
-      margin: 0 auto;
-      display: grid;
-      gap: 20px;
-      position: relative;
-      z-index: 1;
-    }
-
-    @supports (-webkit-touch-callout: none) {
-      html,
-      body {
-        min-height: -webkit-fill-available;
-      }
+      text-rendering: optimizeLegibility;
     }
 
     body::before,
     body::after {
       content: '';
       position: fixed;
-      z-index: -1;
-      border-radius: 50%;
-      filter: blur(6px);
       pointer-events: none;
+      z-index: 0;
+      border-radius: 50%;
+      filter: blur(12px);
+      opacity: 0.7;
     }
 
     body::before {
-      width: 420px;
-      height: 420px;
-      top: -140px;
-      right: -130px;
-      background: radial-gradient(circle, rgba(239, 90, 42, 0.34) 0%, rgba(239, 90, 42, 0) 68%);
+      width: 260px;
+      height: 260px;
+      top: -60px;
+      right: -80px;
+      background: rgba(216, 107, 63, 0.18);
     }
 
     body::after {
-      width: 340px;
-      height: 340px;
-      bottom: -120px;
-      left: -90px;
-      background: radial-gradient(circle, rgba(24, 79, 121, 0.28) 0%, rgba(24, 79, 121, 0) 72%);
+      width: 260px;
+      height: 260px;
+      left: -80px;
+      bottom: -50px;
+      background: rgba(24, 88, 128, 0.18);
     }
 
-    @media (max-width: 900px) {
-      body {
-        background:
-          radial-gradient(circle at 18% 18%, rgba(179, 213, 225, 0.2) 0%, rgba(179, 213, 225, 0) 38%),
-          linear-gradient(138deg, rgba(8, 20, 31, 0.6), rgba(9, 25, 40, 0.36)),
-          url('media/achtergrond-gsm.jpg') center/cover no-repeat;
-        background-attachment: fixed;
-      }
+    .layout-shell {
+      position: relative;
+      z-index: 1;
+      width: min(1160px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
 
-      body::before,
-      body::after {
-        opacity: 0.65;
-        filter: blur(2px);
-      }
+    .banner,
+    .route-search-card,
+    .card,
+    .usage-guide,
+    .install-guide,
+    .page-disclaimer {
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      border: 1px solid var(--panel-border);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px) saturate(120%);
+    }
+
+    .banner,
+    .route-search-card,
+    .card,
+    .usage-guide,
+    .install-guide {
+      padding: 18px 18px 20px;
+    }
+
+    .banner::after,
+    .card::before,
+    .page-disclaimer::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--main-orange), var(--title-accent));
     }
 
     .banner {
-      width: 100%;
-      min-height: 220px;
-      background:
-        linear-gradient(158deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 42%),
-        var(--overlay-bg);
-      border: 1px solid var(--overlay-border);
-      backdrop-filter: blur(14px) saturate(130%);
-      padding: clamp(20px, 2.4vw, 30px);
-      border-radius: 30px;
-      box-shadow: var(--panel-shadow);
-      position: relative;
-      overflow: hidden;
-      animation: fade-up 500ms ease-out;
+      min-height: 180px;
     }
 
-    .banner::after {
-      content: '';
-      position: absolute;
-      left: 18px;
-      right: 18px;
-      top: 0;
-      height: 3px;
-      border-radius: 2px;
-      background: linear-gradient(90deg, var(--main-orange), var(--orange-bright), rgba(255, 194, 142, 0.5));
-      pointer-events: none;
+    .access-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 4000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(4, 10, 16, 0.72);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.18s ease, visibility 0.18s ease;
+    }
+
+    .access-overlay.is-visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .access-modal {
+      width: min(440px, 100%);
+      padding: 24px 22px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 22px;
+      background: rgba(10, 22, 31, 0.94);
+      box-shadow: 0 18px 40px rgba(2, 10, 17, 0.5);
+    }
+
+    .access-modal h2 {
+      margin-bottom: 8px;
+      font-size: clamp(1.6rem, 2vw, 2.2rem);
+      line-height: 1.15;
+    }
+
+    .access-modal p {
+      margin-bottom: 14px;
+      color: rgba(237, 245, 251, 0.8);
+      line-height: 1.5;
+    }
+
+    .access-form {
+      display: grid;
+      gap: 12px;
+    }
+
+    .access-field {
+      width: 100%;
+      min-height: 52px;
+      padding: 12px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+      font-size: 1.02rem;
+    }
+
+    .access-error {
+      min-height: 20px;
+      color: #ffb6a5;
+      font-size: 0.92rem;
+    }
+
+    .access-actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-access {
+      min-width: 140px;
     }
 
     .banner-content {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
       align-items: center;
-      gap: 22px;
+      gap: 18px;
+      min-height: 100%;
     }
 
     .banner-copy {
       display: grid;
       gap: 10px;
-      text-align: left;
       justify-items: start;
-    }
-
-    .banner-mark {
-      width: 148px;
-      aspect-ratio: 1;
-      border-radius: 26px;
-      border: 1px solid rgba(255, 255, 255, 0.86);
-      background: #ffffff;
-      display: grid;
-      place-items: center;
-      box-shadow: 0 14px 28px rgba(10, 24, 36, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.65);
-    }
-
-    .banner img {
-      width: 96px;
-      height: auto;
-      margin: 0;
-      background: transparent;
-      padding: 0;
-      border-radius: 0;
-      box-shadow: none;
+      text-align: left;
     }
 
     .banner-kicker {
+      display: inline-block;
       padding: 6px 12px;
       border-radius: 999px;
-      background: rgba(16, 40, 61, 0.08);
-      color: var(--title-accent);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.09em;
+      background: rgba(255, 255, 255, 0.08);
+      color: #dfeef6;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
     .banner-text {
-      font-size: clamp(1.4rem, 2vw + 0.9rem, 2.1rem);
+      font-size: clamp(1.8rem, 2vw + 0.8rem, 3.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.05em;
       font-weight: 800;
-      letter-spacing: 0.018em;
-      line-height: 1.1;
+      color: #fff;
     }
 
     .banner-text a {
-      color: var(--main-orange);
+      color: #fff;
       text-decoration: none;
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
     }
 
     .banner-text::after {
       content: ' filmcodelijsten';
-      color: var(--title-accent);
+      color: #dfeef6;
+      font-weight: 700;
     }
 
     .banner-description {
-      max-width: 680px;
-      color: var(--text-muted);
-      font-size: clamp(0.95rem, 0.35vw + 0.9rem, 1.08rem);
-      line-height: 1.5;
+      max-width: 62ch;
+      font-size: 1rem;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    .banner-mark {
+      width: 120px;
+      aspect-ratio: 1;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 12px 22px rgba(0, 0, 0, 0.18);
+    }
+
+    .banner img {
+      display: block;
+      width: 82px;
+      height: auto;
+    }
+
+    .lists-heading {
+      padding: 0 4px;
+    }
+
+    .lists-heading h2 {
+      color: var(--heading-color);
+      font-size: clamp(2rem, 2.2vw + 0.9rem, 3.2rem);
+      line-height: 1.1;
+      letter-spacing: -0.05em;
+      font-weight: 800;
+    }
+
+    .route-search-card {
       text-align: left;
     }
 
-    .cards-layout {
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
-
-    .card {
-      padding: 34px 26px;
-      background:
-        linear-gradient(160deg, var(--overlay-highlight), rgba(255, 255, 255, 0)),
-        var(--overlay-bg);
-      border: 1px solid var(--overlay-border);
-      border-radius: 26px;
-      box-shadow: var(--panel-shadow);
-      text-align: center;
-      animation: fade-up 650ms ease-out both;
-      position: relative;
-      overflow: hidden;
-      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      left: 18px;
-      right: 18px;
-      top: 0;
-      height: 3px;
-      border-radius: 2px;
-      background: linear-gradient(90deg, rgba(255, 138, 61, 0.8), rgba(20, 85, 133, 0.55));
-      pointer-events: none;
-    }
-
-    .card::after {
-      content: '';
-      position: absolute;
-      width: 240px;
-      height: 240px;
-      right: -90px;
-      top: -120px;
-      background: radial-gradient(circle, rgba(255, 194, 142, 0.28) 0%, rgba(255, 194, 142, 0) 72%);
-      opacity: 0;
-      transition: opacity 220ms ease;
-      pointer-events: none;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 30px 54px rgba(7, 20, 32, 0.26);
-      border-color: rgba(255, 255, 255, 0.72);
-    }
-
-    .card:hover::after {
-      opacity: 1;
-    }
-
-    .card-main {
-      animation-delay: 120ms;
-    }
-
-    .card-tourism {
-      animation-delay: 210ms;
-    }
-
-    .card h2 {
-      color: var(--heading-color);
-      font-size: clamp(1.3rem, 1.4vw + 0.8rem, 1.9rem);
+    .route-search-card h2 {
       margin-bottom: 10px;
-      letter-spacing: 0.015em;
+      color: #f4f9fc;
+      font-size: clamp(1.6rem, 1.6vw + 1rem, 2.5rem);
+      line-height: 1.12;
+      letter-spacing: -0.04em;
+      font-weight: 800;
     }
 
-    .card p {
-      color: var(--text-muted);
-      font-size: clamp(1rem, 0.35vw + 0.95rem, 1.15rem);
-      margin-bottom: 24px;
-      line-height: 1.55;
+    .search-help {
+      max-width: 60ch;
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-size: 1.04rem;
+      line-height: 1.5;
     }
 
     .route-search {
       position: relative;
       display: grid;
       gap: 10px;
-      margin: 0 0 24px;
-      text-align: left;
-    }
-
-    .route-search-card {
-      animation-delay: 90ms;
-      text-align: left;
-    }
-
-    .route-search-card h2 {
-      margin-bottom: 10px;
-      color: var(--heading-color);
-      font-size: clamp(1.3rem, 1.4vw + 0.8rem, 1.9rem);
-    }
-
-    .search-help {
-      max-width: 62ch;
-      margin: -2px 0 16px;
-      color: var(--text-muted);
-      font-size: 0.94rem;
-      line-height: 1.45;
-    }
-
-    .route-search-card .route-search {
-      margin-bottom: 0;
-    }
-
-    .search-lock {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .search-lock[hidden] {
-      display: none;
-    }
-
-    .search-lock input {
-      min-width: 0;
-      min-height: 44px;
-      padding: 10px 12px;
-      border: 1px solid rgba(18, 50, 71, 0.24);
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.74);
-      color: var(--text-dark);
-      font: inherit;
-    }
-
-    .search-lock button {
-      min-height: 44px;
-      padding: 10px 14px;
-      border: 0;
-      border-radius: 10px;
-      background: var(--deep-blue);
-      color: #fff;
-      font: inherit;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .search-lock button:focus-visible,
-    .search-lock input:focus-visible {
-      outline: 3px solid rgba(31, 96, 112, 0.24);
-      outline-offset: 2px;
-    }
-
-    .search-lock-message {
-      grid-column: 1 / -1;
-      min-height: 1.2em;
-      color: var(--text-muted);
-      font-size: 0.84rem;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .search-lock input {
-        border-color: rgba(174, 203, 224, 0.36);
-        background: rgba(9, 25, 37, 0.6);
-      }
-    }
-
-    @media (max-width: 480px) {
-      .search-lock {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .lists-heading {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 4px 2px 0;
-    }
-
-    .lists-heading h2 {
-      color: var(--heading-color);
-      font-size: clamp(1.45rem, 1.8vw + 0.8rem, 2.1rem);
-      letter-spacing: -0.02em;
-    }
-
-    .search-heading {
-      margin-top: 4px;
-    }
-
-    .route-search label {
-      color: var(--heading-color);
-      font-size: 0.92rem;
-      font-weight: 700;
     }
 
     .route-search input {
       width: 100%;
-      min-height: 50px;
-      padding: 12px 14px;
-      border: 1px solid rgba(18, 50, 71, 0.24);
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.74);
-      color: var(--text-dark);
-      font-size: 1rem;
+      min-height: 56px;
+      padding: 14px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      background: rgba(11, 23, 33, 0.38);
+      color: #edf5fb;
+      font-size: 1.04rem;
       outline: none;
     }
 
     .route-search input::placeholder {
-      color: var(--text-muted);
-      opacity: 0.85;
+      color: rgba(237, 245, 251, 0.7);
     }
 
     .route-search input:focus {
-      border-color: var(--title-accent);
-      box-shadow: 0 0 0 3px rgba(31, 96, 112, 0.18);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06);
     }
 
     .route-selection {
@@ -464,12 +345,10 @@
       grid-template-columns: auto minmax(0, 1fr);
       align-items: center;
       gap: 12px;
-      margin-top: 2px;
-      padding: 12px;
-      border: 1px solid var(--title-accent);
+      padding: 12px 14px;
       border-radius: 12px;
-      background: rgba(255, 255, 255, 0.42);
-      box-shadow: 0 8px 20px rgba(7, 28, 40, 0.14);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .route-selection.is-visible {
@@ -477,31 +356,64 @@
     }
 
     .route-selection-label {
-      margin-bottom: 3px;
-      color: var(--text-muted);
+      color: rgba(237, 245, 251, 0.72);
       font-size: 0.72rem;
       font-weight: 800;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
     }
 
+    .route-number {
+      display: inline-grid;
+      place-items: center;
+      min-width: 46px;
+      min-height: 34px;
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .route-destination {
+      color: #edf5fb;
+      font-size: 1rem;
+      line-height: 1.3;
+    }
+
+    .route-filmcode {
+      display: inline-block;
+      margin-top: 4px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #fff;
+      font-size: 0.86rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .route-filmcode.is-selected {
+      color: #ffd4bf;
+    }
+
     .route-results {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      width: 100%;
+      z-index: 30;
       display: grid;
       gap: 8px;
-      position: absolute;
-      z-index: 10;
-      top: 0;
-      left: 0;
-      width: 0;
-      max-height: min(360px, 52vh);
-      margin: 0;
+      max-height: min(300px, 52vh);
       padding: 10px;
-      border: 1px solid var(--overlay-border);
-      border-radius: 14px;
-      background: var(--overlay-bg);
-      box-shadow: 0 18px 36px rgba(7, 28, 40, 0.28);
       overflow-y: auto;
-      overscroll-behavior: contain;
+      border-radius: 12px;
+      background: rgba(8, 20, 30, 0.86);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 18px 30px rgba(3, 13, 21, 0.28);
     }
 
     .route-results:empty {
@@ -511,336 +423,215 @@
     .route-result {
       display: grid;
       grid-template-columns: auto minmax(0, 1fr);
-      align-items: center;
       gap: 12px;
+      align-items: center;
       padding: 9px 10px;
-      border: 1px solid rgba(18, 50, 71, 0.12);
       border-radius: 10px;
-      background: rgba(255, 255, 255, 0.34);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       cursor: pointer;
-      transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
     }
 
     .route-result:hover,
     .route-result:focus-visible {
-      border-color: var(--title-accent);
-      background: rgba(255, 255, 255, 0.58);
+      background: rgba(255, 255, 255, 0.08);
       outline: none;
-      transform: translateY(-1px);
     }
 
-    .route-number {
-      display: inline-grid;
-      min-width: 46px;
-      min-height: 34px;
-      place-items: center;
-      padding: 4px 8px;
-      border-radius: 7px;
-      font-size: 1rem;
-      font-weight: 800;
+    .cards-layout {
+      display: grid;
+      gap: 18px;
+    }
+
+    .card {
+      text-align: left;
+      padding: 20px 18px;
+    }
+
+    .card h2 {
+      margin-bottom: 8px;
+      color: #f2f9fd;
+      font-size: clamp(1.8rem, 1.5vw + 1rem, 2.8rem);
       line-height: 1.1;
-      text-align: center;
-    }
-
-    .route-details {
-      min-width: 0;
-    }
-
-    .route-filmcode {
-      display: inline-block;
-      padding: 2px 0;
-      border: 0;
-      background: transparent;
-      color: var(--heading-color);
-      cursor: pointer;
-      font-size: 0.82rem;
+      letter-spacing: -0.04em;
       font-weight: 800;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
     }
 
-    .route-filmcode:hover,
-    .route-filmcode:focus-visible {
-      color: var(--main-orange);
-      text-decoration: underline;
+    .card p {
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.5;
     }
 
-    .route-filmcode.is-selected {
-      color: var(--main-orange);
+    .card-actions {
+      display: grid;
+      gap: 14px;
+      margin-top: 16px;
     }
 
-    .route-selection .route-filmcode {
-      cursor: default;
-      pointer-events: none;
+    .buttons-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
     }
 
-    .route-selection .route-filmcode:hover {
-      color: var(--main-orange);
-      text-decoration: none;
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 14px 18px;
+      border: 0;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--main-orange), var(--orange-bright));
+      color: #fff;
+      font-size: 1.04rem;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      box-shadow: 0 10px 20px rgba(216, 107, 63, 0.28);
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
     }
 
-    .route-destination {
-      margin-top: 2px;
-      color: var(--text-dark);
-      font-size: 0.98rem;
-      line-height: 1.3;
-      overflow-wrap: anywhere;
+    .btn:hover,
+    .btn:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 24px rgba(216, 107, 63, 0.34);
+      filter: brightness(1.02);
+      outline: none;
     }
 
-    @media (prefers-color-scheme: dark) {
-      .route-search input {
-        border-color: rgba(174, 203, 224, 0.36);
-        background: rgba(9, 25, 37, 0.6);
-      }
-
-      .route-result {
-        border-color: rgba(174, 203, 224, 0.2);
-        background: rgba(9, 25, 37, 0.42);
-      }
-
-      .route-selection {
-        background: rgba(9, 25, 37, 0.56);
-      }
+    .btn:active {
+      transform: translateY(0);
     }
 
-    @media (max-width: 767px) {
-      .route-results {
-        max-height: min(300px, 45vh);
-      }
+    .btn-half {
+      width: min(100%, 220px);
+      margin: 0 auto;
     }
 
-    .usage-guide {
-      width: 100%;
-      padding: 28px 26px;
-      background:
-        linear-gradient(160deg, var(--overlay-highlight), rgba(255, 255, 255, 0)),
-        var(--overlay-bg);
-      border: 1px solid var(--overlay-border);
-      border-radius: 22px;
-      box-shadow: 0 22px 40px rgba(7, 20, 32, 0.2);
-      animation: fade-up 700ms ease-out both;
-      animation-delay: 250ms;
-      content-visibility: auto;
-      contain-intrinsic-size: 720px;
+    .total-action {
+      display: flex;
+      justify-content: center;
+      padding-top: 4px;
+    }
+
+    .usage-guide,
+    .install-guide {
+      padding: 20px 18px;
     }
 
     .usage-guide h2,
-    .usage-guide h3 {
-      color: var(--heading-color);
+    .usage-guide h3,
+    .install-guide h2,
+    .install-platform h3 {
+      color: #eef7fb;
     }
 
     .usage-guide h2 {
-      margin-bottom: 8px;
-      font-size: clamp(1.25rem, 1vw + 0.95rem, 1.65rem);
+      margin-bottom: 12px;
+      font-size: clamp(1.8rem, 1.5vw + 1.2rem, 2.8rem);
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      font-weight: 800;
     }
 
     .usage-guide h3 {
-      margin-top: 20px;
-      margin-bottom: 6px;
-      font-size: 1.05rem;
+      margin-top: 18px;
+      margin-bottom: 8px;
+      font-size: 1.28rem;
+      letter-spacing: -0.03em;
+      font-weight: 800;
     }
 
     .usage-guide p,
-    .usage-guide li {
-      color: var(--text-muted);
+    .usage-guide li,
+    .install-intro,
+    .install-platform ol {
+      color: rgba(236, 243, 247, 0.88);
+      font-size: 1.02rem;
       line-height: 1.55;
     }
 
+    .usage-guide p + p,
+    .usage-guide ul + p {
+      margin-top: 10px;
+    }
+
     .usage-guide ul {
-      margin: 0 0 0 20px;
+      margin-left: 20px;
     }
 
     .usage-guide li + li {
-      margin-top: 5px;
-    }
-
-    .usage-guide strong {
-      color: var(--text-dark);
-    }
-
-    .install-guide {
-      width: 100%;
-      padding: 24px 22px;
-      background:
-        linear-gradient(160deg, var(--overlay-highlight), rgba(255, 255, 255, 0)),
-        var(--overlay-bg);
-      border: 1px solid var(--overlay-border);
-      border-radius: 22px;
-      box-shadow: 0 22px 40px rgba(7, 20, 32, 0.2);
-      animation: fade-up 750ms ease-out both;
-      animation-delay: 290ms;
-    }
-
-    .page-disclaimer {
-      width: 100%;
-      padding: 16px 18px;
-      border-radius: 16px;
-      border: 1px solid var(--disclaimer-border);
-      background-color: rgba(255, 255, 255, 0.78);
-      background: var(--disclaimer-bg);
-      color: var(--text-dark);
-      line-height: 1.5;
-      font-size: 0.9rem;
-      box-shadow: 0 12px 28px rgba(7, 20, 32, 0.16);
-      animation: fade-up 860ms ease-out both;
-      animation-delay: 340ms;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .page-disclaimer strong {
-      color: var(--heading-color);
-      letter-spacing: 0.01em;
-    }
-
-    .page-disclaimer p {
       margin-top: 6px;
     }
 
-    .page-disclaimer::before {
-      content: '';
-      position: absolute;
-      left: 14px;
-      right: 14px;
-      top: 0;
-      height: 2px;
-      border-radius: 2px;
-      background: linear-gradient(90deg, var(--main-orange), rgba(255, 194, 142, 0.6));
-      pointer-events: none;
-    }
-
     .install-guide h2 {
-      color: var(--heading-color);
-      font-size: clamp(1.15rem, 0.85vw + 0.95rem, 1.45rem);
-      margin-bottom: 10px;
-      text-align: center;
+      margin-bottom: 8px;
+      font-size: clamp(1.6rem, 1vw + 1.05rem, 2.3rem);
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      font-weight: 800;
     }
 
     .install-intro {
-      color: var(--text-muted);
-      text-align: center;
-      margin-bottom: 16px;
-      line-height: 1.45;
+      margin-bottom: 14px;
     }
 
     .install-columns {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
+      gap: 12px;
     }
 
     .install-platform {
-      padding: 14px 14px 12px;
-      border: 1px solid var(--overlay-border);
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.25);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      padding: 14px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .install-platform h3 {
-      color: var(--heading-color);
-      font-size: 1rem;
       margin-bottom: 8px;
+      font-size: 1.1rem;
+      font-weight: 700;
     }
 
     .install-platform ol {
-      margin: 0;
       padding-left: 18px;
-      color: var(--text-dark);
-      line-height: 1.42;
-      font-size: 0.96rem;
     }
 
     .install-platform li + li {
-      margin-top: 5px;
+      margin-top: 6px;
     }
 
-    .buttons-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(220px, 1fr));
-      gap: 14px;
+    .page-disclaimer {
+      padding: 16px 18px;
+      background: rgba(18, 49, 74, 0.46);
+      border-color: rgba(202, 226, 241, 0.18);
+      color: #edf5fb;
+      line-height: 1.5;
+      font-size: 0.95rem;
     }
 
-    .btn {
-      background: linear-gradient(135deg, var(--main-orange), var(--orange-bright));
-      color: white;
-      padding: 14px 18px;
-      min-height: 46px;
-      border: 1px solid rgba(255, 219, 193, 0.46);
-      font-size: 15.5px;
-      font-weight: 700;
-      letter-spacing: 0.008em;
-      border-radius: 16px;
-      font-family: inherit;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-      box-shadow: 0 12px 24px rgba(239, 90, 42, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.24);
-      position: relative;
-      overflow: hidden;
-      isolation: isolate;
+    .page-disclaimer strong {
+      color: #fff;
+      font-weight: 800;
     }
 
-    .btn::after {
-      content: '';
-      position: absolute;
-      inset: 1px;
-      border-radius: 12px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0));
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    .btn:hover,
-    .btn:focus-visible {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 30px rgba(239, 90, 42, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.24);
-      filter: saturate(1.06);
-    }
-
-    .btn:focus-visible {
-      outline: 2px solid rgba(255, 255, 255, 0.9);
-      outline-offset: 2px;
-    }
-
-    .btn:active {
-      transform: translateY(0);
-      box-shadow: 0 8px 18px rgba(239, 90, 42, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.24);
-    }
-
-    .card-actions .buttons-grid {
-      margin-bottom: 14px;
-    }
-
-    .total-action {
-      margin-top: 14px;
-      padding-top: 14px;
-      border-top: 1px solid var(--overlay-border);
-    }
-
-    .btn-half {
-      display: block;
-      width: 100%;
-      max-width: calc((100% - 14px) / 2);
-      margin: 0 auto;
-    }
-
-    .btn-total {
-      margin-top: 10px;
-    }
-
-    body.pdf-viewer-open {
-      overflow: hidden;
+    .page-disclaimer p {
+      margin-top: 8px;
     }
 
     .pdf-overlay {
       position: fixed;
       inset: 0;
-      z-index: 9500;
+      z-index: 2000;
       display: none;
       place-items: center;
       padding: 16px;
-      background: rgba(6, 14, 22, 0.62);
-      backdrop-filter: blur(5px);
+      background: rgba(2, 10, 15, 0.74);
     }
 
     .pdf-overlay.is-visible {
@@ -848,122 +639,106 @@
     }
 
     .pdf-panel {
-      width: min(1180px, 100%);
-      height: min(92vh, 980px);
-      border-radius: 20px;
-      border: 1px solid var(--overlay-border);
-      background:
-        linear-gradient(160deg, var(--overlay-highlight), rgba(255, 255, 255, 0)),
-        var(--overlay-bg);
-      box-shadow: 0 26px 48px rgba(4, 14, 22, 0.45);
+      width: min(1100px, 100%);
+      height: min(90vh, 920px);
       display: grid;
       grid-template-rows: auto minmax(0, 1fr);
+      background: rgba(14, 28, 39, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
       overflow: hidden;
-      overscroll-behavior: contain;
     }
 
     .pdf-toolbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      padding: 12px;
-      border-bottom: 1px solid var(--overlay-border);
+      gap: 8px;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
     }
 
     .pdf-title {
-      flex: 1;
-      min-width: 0;
-      font-size: clamp(1rem, 0.6vw + 0.9rem, 1.25rem);
-      color: var(--heading-color);
-      line-height: 1.2;
-    }
-
-    .pdf-controls {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: nowrap;
-      justify-content: flex-end;
+      color: #f1f8ff;
+      font-size: 1rem;
+      font-weight: 700;
     }
 
     .btn-soft {
-      background: rgba(16, 40, 61, 0.18);
-      border: 1px solid var(--overlay-border);
-      color: var(--text-dark);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #fff;
       box-shadow: none;
-    }
-
-    .btn-soft:hover,
-    .btn-soft:focus-visible,
-    .btn-soft:active {
-      background: rgba(16, 40, 61, 0.24);
-      box-shadow: none;
-      filter: none;
     }
 
     .btn-close {
-      width: 40px;
-      min-width: 40px;
-      height: 40px;
-      min-height: 40px;
+      width: 38px;
+      min-width: 38px;
+      height: 38px;
+      min-height: 38px;
       padding: 0;
       border-radius: 999px;
-      font-size: 1.08rem;
-      font-weight: 800;
+      font-size: 1.2rem;
       line-height: 1;
-    }
-
-    .pdf-controls .btn {
-      width: auto;
-      min-height: 40px;
-      padding: 10px 14px;
     }
 
     .pdf-frame {
       width: 100%;
       height: 100%;
-      min-height: 0;
-      border: none;
-      background: #ffffff;
+      border: 0;
+      background: #fff;
+    }
+
+    .skip-link {
+      position: fixed;
+      left: 12px;
+      top: 12px;
+      z-index: 3000;
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: var(--deep-blue);
+      color: #fff;
+      text-decoration: none;
+      transform: translateY(-180%);
+      transition: transform 0.15s ease;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
     }
 
     @media (min-width: 992px) {
       .cards-layout {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        align-items: stretch;
-      }
-    }
-
-    @media (min-width: 768px) and (max-width: 991px) {
-      body {
-        padding: 24px 18px 38px;
-      }
-
-      .card {
-        padding: 30px 22px;
       }
     }
 
     @media (max-width: 767px) {
       body {
-        padding: 14px 12px 24px;
-        padding-bottom: max(24px, env(safe-area-inset-bottom));
+        padding: 12px 10px 28px;
       }
 
       .layout-shell {
         gap: 14px;
       }
 
+      .banner,
+      .route-search-card,
+      .card,
+      .usage-guide,
+      .install-guide,
+      .page-disclaimer {
+        border-radius: 18px;
+      }
+
       .banner {
-        min-height: 182px;
-        border-radius: 20px;
-        box-shadow: 0 16px 34px rgba(8, 20, 32, 0.18);
+        padding: 16px 14px 18px;
       }
 
       .banner-content {
         grid-template-columns: 1fr;
-        gap: 14px;
+        gap: 12px;
       }
 
       .banner-copy {
@@ -976,328 +751,124 @@
       }
 
       .banner-mark {
-        margin-inline: auto;
-        width: 120px;
-        border-radius: 20px;
+        width: 110px;
+        margin: 0 auto;
       }
 
       .banner img {
-        width: 76px;
+        width: 72px;
       }
 
-      .banner-kicker {
-        font-size: 0.72rem;
+      .route-search-card,
+      .card,
+      .usage-guide,
+      .install-guide {
+        padding: 18px 14px;
       }
 
-      .card {
-        padding: 24px 14px;
-        border-radius: 20px;
-        box-shadow: 0 14px 30px rgba(8, 20, 32, 0.17);
-      }
-
-      .buttons-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .btn {
-        width: 100%;
-        min-height: 50px;
-        font-size: 16px;
-      }
-
-      .btn-half {
-        max-width: 100%;
-      }
-
+      .buttons-grid,
       .install-columns {
         grid-template-columns: 1fr;
       }
 
-      .install-guide {
-        padding: 16px 12px;
-      }
-
-      .page-disclaimer {
-        padding: 14px 12px;
-        border-radius: 14px;
-        font-size: 0.84rem;
-      }
-
-      .pdf-overlay {
-        padding: 0;
-        background: rgba(6, 14, 22, 0.76);
-      }
-
-      .pdf-panel {
+      .btn,
+      .btn-half {
         width: 100%;
-        height: 100vh;
-        height: 100dvh;
-        max-height: none;
-        border-radius: 0;
-        border: none;
       }
 
-      .pdf-toolbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        padding: calc(8px + env(safe-area-inset-top)) 10px 10px;
-      }
-
-      .pdf-title {
-        max-width: 56vw;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-size: 0.94rem;
-        line-height: 1.2;
-      }
-
-      .pdf-controls {
-        gap: 6px;
-      }
-
-      .pdf-controls .btn {
-        width: auto;
-        min-height: 40px;
-        padding: 8px 12px;
-        font-size: 0.9rem;
-      }
-
-      .btn-close {
-        width: 36px;
-        min-width: 36px;
-        height: 36px;
-        min-height: 36px;
-        font-size: 1rem;
-      }
-    }
-
-    body {
-      padding: clamp(18px, 3vw, 42px) clamp(12px, 3vw, 34px) clamp(28px, 4vw, 56px);
-    }
-
-    .layout-shell {
-      width: min(1180px, 100%);
-      gap: clamp(14px, 2vw, 22px);
-    }
-
-    .banner,
-    .card,
-    .usage-guide,
-    .install-guide {
-      border-radius: 20px;
-      box-shadow: var(--panel-shadow);
-      backdrop-filter: blur(18px) saturate(120%);
-    }
-
-    .banner {
-      min-height: 210px;
-      padding: clamp(24px, 4vw, 42px);
-    }
-
-    .banner-content {
-      gap: clamp(18px, 4vw, 52px);
-    }
-
-    .banner-text {
-      font-size: clamp(1.7rem, 2.5vw + 0.7rem, 3rem);
-    }
-
-    .banner-description {
-      max-width: 58ch;
-    }
-
-    .banner-mark {
-      width: clamp(104px, 13vw, 148px);
-      border-radius: 22px;
-    }
-
-    .banner::after,
-    .card::before,
-    .page-disclaimer::before {
-      background: linear-gradient(90deg, var(--main-orange), var(--title-accent));
-    }
-
-    .card {
-      padding: clamp(24px, 3vw, 34px);
-      text-align: left;
-    }
-
-    .card p {
-      max-width: 44ch;
-    }
-
-    .btn {
-      border-radius: 12px;
-      box-shadow: 0 8px 18px rgba(216, 107, 63, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.24);
-    }
-
-    .usage-guide,
-    .install-guide {
-      padding: clamp(22px, 3vw, 32px);
-    }
-
-    .usage-guide p + p,
-    .usage-guide ul + p {
-      margin-top: 10px;
-    }
-
-    .usage-guide h3 {
-      margin-top: 24px;
-      color: var(--title-accent);
-    }
-
-    .skip-link {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      z-index: 10000;
-      padding: 10px 14px;
-      border-radius: 10px;
-      background: var(--deep-blue);
-      color: #fff;
-      transform: translateY(-160%);
-      transition: transform 160ms ease;
-    }
-
-    .skip-link:focus {
-      transform: translateY(0);
-    }
-
-    @media (min-width: 992px) {
-      .card {
-        display: flex;
-        flex-direction: column;
-      }
-
-      .card-actions {
-        margin-top: auto;
-      }
-    }
-
-    @media (max-width: 767px) {
-      .banner,
-      .card,
-      .usage-guide,
-      .install-guide {
-        backdrop-filter: none;
-      }
-
-      .banner {
-        min-height: 0;
-        padding: 22px 18px;
-      }
-
-      .banner-content {
-        gap: 12px;
-      }
-
-      .banner-mark {
-        width: 104px;
-      }
-
-      .card,
-      .usage-guide,
-      .install-guide {
-        border-radius: 16px;
-      }
-
-      .card {
-        padding: 22px 16px;
-      }
-
-      .usage-guide,
-      .install-guide {
-        padding: 22px 16px;
+      .route-search input {
+        min-height: 54px;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 1ms !important;
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
-        transition-duration: 1ms !important;
+        transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
       }
     }
-
-    @keyframes fade-up {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
   </style>
 
   <script>
-    const PWA_GEINSTALLEERD_SLEUTEL = 'busbe_filmcodelijsten_pwa_geinstalleerd';
-    let androidInstallPromptBeschikbaar = false;
+    const TOEGANG_OPGESLAGEN_SLEUTEL = 'busbe_filmcodelijsten_toegang_ok';
+    const TOEGANG_CODE = '550524';
 
-    function isStandalonePwa() {
-      return window.matchMedia('(display-mode: standalone)').matches
-        || window.navigator.standalone === true;
-    }
-
-    function heeftPwaInstallatieVlag() {
+    function heeftOpgeslagenToegang() {
       try {
-        return window.localStorage.getItem(PWA_GEINSTALLEERD_SLEUTEL) === '1';
+        return window.localStorage.getItem(TOEGANG_OPGESLAGEN_SLEUTEL) === '1';
       } catch (_error) {
         return false;
       }
     }
 
-    function markeerPwaAlsGeinstalleerd() {
+    function slaToegangOp() {
       try {
-        window.localStorage.setItem(PWA_GEINSTALLEERD_SLEUTEL, '1');
+        window.localStorage.setItem(TOEGANG_OPGESLAGEN_SLEUTEL, '1');
       } catch (_error) {
         /* als storage niet beschikbaar is, blijft de app gewoon werken */
       }
     }
 
-    function ondersteuntInstallatieOpToestel() {
-      const userAgent = window.navigator.userAgent || '';
-      const isIosToestel = /iPad|iPhone|iPod/i.test(userAgent);
-      const isSafari = /Safari/i.test(userAgent) && !/CriOS|FxiOS|EdgiOS|OPiOS|Android/i.test(userAgent);
-      const isAndroidChrome = /Android/i.test(userAgent) && /Chrome/i.test(userAgent)
-        && !/EdgA|OPR|SamsungBrowser|YaBrowser/i.test(userAgent);
-      const heeftInstallPromptOndersteuning = 'onbeforeinstallprompt' in window;
-
-      return (isIosToestel && isSafari)
-        || (isAndroidChrome && (heeftInstallPromptOndersteuning || androidInstallPromptBeschikbaar));
+    function toonToegangFout(bericht) {
+      const fout = document.getElementById('accessError');
+      if (fout) {
+        fout.textContent = bericht;
+      }
     }
 
-    function updateBannerKicker(pwaReedsGeinstalleerd) {
-      const bannerKicker = document.getElementById('bannerKicker');
-      if (!bannerKicker) {
-        return;
+    function sluitToegangModal() {
+      const overlay = document.getElementById('accessOverlay');
+      if (overlay) {
+        overlay.classList.remove('is-visible');
+        overlay.setAttribute('aria-hidden', 'true');
       }
-      bannerKicker.textContent = pwaReedsGeinstalleerd ? 'Interne app' : 'Interne website';
     }
 
-    function updateInstallatieKaart() {
-      if (isStandalonePwa()) {
-        markeerPwaAlsGeinstalleerd();
-      }
-
-      const pwaReedsGeinstalleerd = isStandalonePwa() || heeftPwaInstallatieVlag();
-      const toestelOndersteuntInstallatie = ondersteuntInstallatieOpToestel();
-      const installatieKaart = document.getElementById('installatieKaart');
-
-      updateBannerKicker(pwaReedsGeinstalleerd);
-
-      if (!installatieKaart) {
+    function openToegangModal() {
+      const overlay = document.getElementById('accessOverlay');
+      if (!overlay) {
         return;
       }
-      installatieKaart.hidden = pwaReedsGeinstalleerd || !toestelOndersteuntInstallatie;
+
+      const input = document.getElementById('accessCodeInput');
+      input?.focus();
+      overlay.setAttribute('aria-hidden', 'false');
+      requestAnimationFrame(() => overlay.classList.add('is-visible'));
+    }
+
+    function controleerToegangOpPagina() {
+      if (heeftOpgeslagenToegang()) {
+        return true;
+      }
+
+      openToegangModal();
+      return false;
+    }
+
+    function initialiseerToegangModal() {
+      const form = document.getElementById('accessForm');
+      const input = document.getElementById('accessCodeInput');
+      if (!form || !input) {
+        return;
+      }
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if (input.value.trim() !== TOEGANG_CODE) {
+          toonToegangFout('Toegang geweigerd: verkeerde code.');
+          input.value = '';
+          input.focus();
+          return;
+        }
+
+        slaToegangOp();
+        toonToegangFout('');
+        sluitToegangModal();
+        initialiseerPdfOverlay();
+        initialiseerLijnbusZoekfunctie();
+      });
     }
 
     let laatsteAchtergrond = '';
@@ -1322,19 +893,8 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       pasAchtergrondAan();
-      updateInstallatieKaart();
-    });
-    window.addEventListener('pageshow', updateInstallatieKaart);
-    window.addEventListener('beforeinstallprompt', () => {
-      androidInstallPromptBeschikbaar = true;
-      updateInstallatieKaart();
-    });
-    window.addEventListener('appinstalled', () => {
-      markeerPwaAlsGeinstalleerd();
-      updateInstallatieKaart();
     });
 
-    const TOEGANG_OPGESLAGEN_SLEUTEL = 'busbe_filmcodelijsten_toegang_ok';
     const PDF_PER_LOCATIE = {
       zwevegem: { titel: 'Filmcodelijst Zwevegem', bestand: 'media/filmcode-zwevegem.pdf' },
       diksmuide: { titel: 'Filmcodelijst Diksmuide', bestand: 'media/filmcode-diksmuide.pdf' },
@@ -1346,7 +906,6 @@
     const MAX_ZOEKRESULTATEN = 80;
     let lijnbusZoekdata = [];
     let zoekTimer;
-    let zoekToegangGecontroleerd = false;
 
     function maakZoekrecord(regel) {
       const velden = regel.split(';').map((veld) => veld.trim());
@@ -1368,25 +927,14 @@
         : `Filmcode ${filmcode}`;
     }
 
-    function controleerZoektoegang() {
-      if (zoekToegangGecontroleerd || heeftOpgeslagenToegang()) {
-        zoekToegangGecontroleerd = true;
-        return true;
+    function clearNodeChildren(node) {
+      if (!node) {
+        return;
       }
 
-      const code = prompt("Voer toegangscode in om de zoekfunctie te gebruiken:");
-      if (code === null) {
-        return false;
+      while (node.firstChild) {
+        node.removeChild(node.firstChild);
       }
-
-      if (code.trim() !== "550524") {
-        alert("Toegang geweigerd: verkeerde code.");
-        return false;
-      }
-
-      slaToegangOp();
-      zoekToegangGecontroleerd = true;
-      return true;
     }
 
     function toonGeselecteerdeRit(rit) {
@@ -1396,8 +944,8 @@
         return;
       }
 
-      resultaten?.replaceChildren();
-      selectie.replaceChildren();
+      clearNodeChildren(resultaten);
+      clearNodeChildren(selectie);
       if (rit.lijncode && rit.lijnnummer) {
         const lijnnummer = document.createElement('span');
         lijnnummer.className = 'route-number';
@@ -1508,7 +1056,7 @@
 
       const zoektermen = zoekterm.trim().toLocaleLowerCase('nl-BE').split(/\s+/).filter(Boolean);
       if (!zoektermen.length) {
-        resultaten.replaceChildren();
+        clearNodeChildren(resultaten);
         selectie?.classList.remove('is-visible');
         return;
       }
@@ -1553,7 +1101,8 @@
 
       const zichtbareResultaten = gevonden.slice(0, MAX_ZOEKRESULTATEN);
 
-      resultaten.replaceChildren(...zichtbareResultaten.map((rit) => {
+      clearNodeChildren(resultaten);
+      zichtbareResultaten.forEach((rit) => {
         const resultaat = document.createElement('article');
         resultaat.className = 'route-result';
         resultaat.tabIndex = 0;
@@ -1596,8 +1145,8 @@
 
         details.append(bestemming, filmcode);
         resultaat.append(details);
-        return resultaat;
-      }));
+        resultaten.append(resultaat);
+      });
       positioneerRouteResultaten();
 
     }
@@ -1637,11 +1186,6 @@
       }
 
       invoer.addEventListener('input', () => {
-        if (!controleerZoektoegang()) {
-          invoer.value = '';
-          return;
-        }
-
         window.clearTimeout(zoekTimer);
         zoekTimer = window.setTimeout(() => toonLijnbusResultaten(invoer.value), 90);
       });
@@ -1713,27 +1257,9 @@
       });
     }
 
-    function slaToegangOp() {
-      try {
-        window.localStorage.setItem(TOEGANG_OPGESLAGEN_SLEUTEL, '1');
-      } catch (_error) {
-        /* als storage niet beschikbaar is, blijft de app gewoon werken */
-      }
-    }
-
     function vraagToegang(locatie) {
-      if (!heeftOpgeslagenToegang()) {
-        const code = prompt("Voer toegangscode in om de PDF te bekijken:");
-        if (code === null) {
-          return;
-        }
-
-        if (code.trim() !== "550524") {
-          alert("Toegang geweigerd: verkeerde code.");
-          return;
-        }
-
-        slaToegangOp();
+      if (!heeftOpgeslagenToegang() && !controleerToegangOpPagina()) {
+        return;
       }
 
       const gekozenPdf = PDF_PER_LOCATIE[locatie];
@@ -1750,15 +1276,12 @@
       openPdfOverlay(gekozenPdf);
     }
 
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(() => {
-          /* registratie faalde; pagina blijft werken zonder offline mode */
-        });
-      });
-    }
-
     window.addEventListener('DOMContentLoaded', () => {
+      initialiseerToegangModal();
+      if (!controleerToegangOpPagina()) {
+        return;
+      }
+
       initialiseerPdfOverlay();
       initialiseerLijnbusZoekfunctie();
     });
@@ -1854,31 +1377,6 @@
       <p><strong>Alvast bedankt voor jullie medewerking en het correct gebruik van de filmbeelden.</strong></p>
     </section>
 
-    <section id="installatieKaart" class="install-guide" aria-labelledby="installatieTitel">
-      <h2 id="installatieTitel">App installeren op smartphone</h2>
-      <p class="install-intro">Zo voeg je deze webapp toe aan je startscherm op iPhone of Android.</p>
-      <div class="install-columns">
-        <article class="install-platform">
-          <h3>iPhone (Safari)</h3>
-          <ol>
-            <li>Open deze website in Safari.</li>
-            <li>Tik onderaan op <strong>Deel</strong> (vierkant met pijl omhoog).</li>
-            <li>Kies <strong>Zet op beginscherm</strong>.</li>
-            <li>Tik op <strong>Voeg toe</strong>.</li>
-          </ol>
-        </article>
-        <article class="install-platform">
-          <h3>Android (Chrome)</h3>
-          <ol>
-            <li>Open deze website in Chrome.</li>
-            <li>Tik rechtsboven op het menu (drie puntjes).</li>
-            <li>Kies <strong>App installeren</strong> of <strong>Toevoegen aan startscherm</strong>.</li>
-            <li>Bevestig met <strong>Installeren</strong> of <strong>Toevoegen</strong>.</li>
-          </ol>
-        </article>
-      </div>
-    </section>
-
     <section class="page-disclaimer" aria-label="Disclaimer">
       <strong>Disclaimer</strong>
       <p>De informatie op deze pagina is uitsluitend bedoeld voor intern gebruik binnen bus.be. Deze gegevens mogen niet openbaar worden gemaakt, verspreid, gekopieerd of gedeeld met derden zonder uitdrukkelijke toestemming van bus.be.</p>
@@ -1897,5 +1395,19 @@
     </section>
   </div>
 
-</body>
+
+  <div id="accessOverlay" class="access-overlay" aria-hidden="true">
+    <section class="access-modal" aria-labelledby="accessTitel">
+      <h2 id="accessTitel">Toegangscode</h2>
+      <p>Voer de toegangscode in om deze site te openen.</p>
+      <form id="accessForm" class="access-form" novalidate>
+        <input id="accessCodeInput" class="access-field" type="password" inputmode="numeric" autocomplete="off" placeholder="550524" aria-label="Toegangscode" />
+        <div id="accessError" class="access-error" aria-live="polite"></div>
+        <div class="access-actions">
+          <button type="submit" class="btn btn-access">Openen</button>
+        </div>
+      </form>
+    </section>
+  </div></body>
 </html>
+
