@@ -1,4 +1,4 @@
-const CACHE_NAME = "busbe-filmcodes-v24";
+const CACHE_NAME = "busbe-filmcodes-v25";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -6,8 +6,6 @@ const APP_SHELL = [
   "./media/favicon.ico",
   "./media/logo.svg",
   "./media/logo.jpg",
-  "./media/achtergrond-pc.jpg",
-  "./media/achtergrond-gsm.jpg",
   "./media/zoek-data.json"
 ];
 
