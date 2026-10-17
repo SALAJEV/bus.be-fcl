@@ -1,13 +1,13 @@
-const CACHE_NAME = "busbe-filmcodes-v26";
+const CACHE_NAME = "busbe-filmcodes-v37";
 const APP_SHELL = [
-  "./",
   "./index.html",
   "./manifest.webmanifest",
   "./media/favicon.ico",
-  "./media/logo.svg",
-  "./media/logo-dark.svg",
-  "./media/logo.jpg",
-  "./media/zoek-data.json"
+  "./media/busbe-logo.svg",
+  "./media/app-icon.jpg",
+  "./media/route-search-data.csv",
+  "./media/background-desktop.jpg",
+  "./media/background-mobile.jpg"
 ];
 
 self.addEventListener("install", (event) => {
@@ -44,49 +44,48 @@ self.addEventListener("fetch", (event) => {
   }
 
   if (event.request.mode === "navigate") {
-    event.respondWith(networkFirst(event.request));
+    event.respondWith(cacheFirstWithBackgroundUpdate(event.request, event));
     return;
   }
 
   const isStaticAsset = ["style", "script", "image", "font"].includes(event.request.destination);
   if (isStaticAsset || APP_SHELL.some((path) => url.pathname.endsWith(path.replace("./", "/")))) {
-    event.respondWith(cacheFirstWithBackgroundUpdate(event.request));
+    event.respondWith(cacheFirstWithBackgroundUpdate(event.request, event));
   }
 });
 
-async function networkFirst(request) {
-  try {
-    const networkResponse = await fetch(request);
-    const cache = await caches.open(CACHE_NAME);
-    if (networkResponse.ok) {
-      cache.put(request, networkResponse.clone());
-    }
-    return networkResponse;
-  } catch (_error) {
-    const cachedPage = await caches.match(request);
-    if (cachedPage) {
-      return cachedPage;
-    }
-    const fallbackPage = await caches.match("./index.html");
-    if (fallbackPage) {
-      return fallbackPage;
-    }
-    throw _error;
-  }
-}
-
-async function cacheFirstWithBackgroundUpdate(request) {
-  const cache = await caches.open(CACHE_NAME);
-  const cached = await cache.match(request);
+function cacheFirstWithBackgroundUpdate(request, event) {
+  const cachePromise = caches.open(CACHE_NAME).catch((error) => {
+    console.error("Service worker could not open the cache.", error);
+    return null;
+  });
 
   const networkPromise = fetch(request)
-    .then((networkResponse) => {
+    .then(async (networkResponse) => {
       if (networkResponse.ok) {
-        cache.put(request, networkResponse.clone());
+        const cache = await cachePromise;
+        if (cache) {
+          try {
+            await cache.put(request, networkResponse.clone());
+          } catch (error) {
+            console.error("Service worker could not update the cache.", error);
+          }
+        }
       }
       return networkResponse;
     })
-    .catch(() => cached);
+    .catch(async (error) => {
+      const cache = await cachePromise;
+      const cached = cache && (await cache.match(request) || (request.mode === 'navigate' ? await cache.match('./index.html') : null));
+      if (cached) {
+        return cached;
+      }
+      throw error;
+    });
 
-  return cached || networkPromise;
+  event.waitUntil(networkPromise.then(() => undefined, () => undefined));
+  return cachePromise.then(async (cache) => {
+    const cached = cache && (await cache.match(request) || (request.mode === 'navigate' ? await cache.match('./index.html') : null));
+    return cached || networkPromise;
+  });
 }

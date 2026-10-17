@@ -8,8 +8,8 @@
   "background_color": "#f0f1f1",
   "icons": [
     {
-      "src": "media/logo.jpg",
-      "sizes": "3200x3200",
+      "src": "media/app-icon.jpg",
+      "sizes": "512x512",
       "type": "image/jpeg",
       "purpose": "any"
     }
