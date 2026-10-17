@@ -78,8 +78,10 @@
     .route-result { display: grid; width: 100%; grid-template-columns: auto minmax(0,1fr); align-items: center; gap: 12px; padding: 11px 12px; border: 0; border-radius: 8px; background: var(--surface-soft); color: var(--ink); cursor: pointer; text-align: left; }
     .route-result:hover, .route-result:focus-visible { background: rgba(204,81,24,.1); outline: none; }
     .route-empty { padding: 13px; color: var(--muted); }
-    .route-selection { display: none; grid-template-columns: auto minmax(0,1fr); align-items: center; gap: 14px; padding: 14px; border: 1px solid var(--line); border-radius: 11px; background: var(--surface-soft); }
+    .route-selection { position: relative; display: none; grid-template-columns: auto minmax(0,1fr); align-items: center; gap: 14px; padding: 14px 54px 14px 14px; border: 1px solid var(--line); border-radius: 11px; background: var(--surface-soft); }
     .route-selection.is-visible { display: grid; }
+    .route-selection-clear { position: absolute; top: 8px; right: 8px; display: grid; width: 36px; height: 36px; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--muted); font-size: 1.35rem; line-height: 1; cursor: pointer; transition: color .15s ease, background .15s ease, border-color .15s ease, transform .15s ease; }
+    .route-selection-clear:hover { transform: rotate(90deg); border-color: var(--brand-orange); background: rgba(204,81,24,.08); color: var(--brand-orange-dark); }
     .route-selection-label { margin-bottom: 3px; color: var(--muted); font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
     .route-number { display: inline-grid; min-width: 48px; min-height: 38px; padding: 4px 9px; place-items: center; border-radius: 7px; color: #fff; font-size: 1rem; font-weight: 800; }
     .route-destination { color: var(--ink); font-size: .96rem; line-height: 1.4; }
@@ -388,7 +390,24 @@
       filmcode.textContent = maakFilmcodeLabel(rit.filmcode);
 
       details.append(label, bestemming, filmcode);
-      selectie.append(details);
+      const wisKnop = document.createElement('button');
+      wisKnop.type = 'button';
+      wisKnop.className = 'route-selection-clear';
+      wisKnop.textContent = String.fromCharCode(0x00D7);
+      wisKnop.setAttribute('aria-label', 'Selectie wissen');
+      wisKnop.title = 'Selectie wissen';
+      wisKnop.addEventListener('click', () => {
+        clearNodeChildren(selectie);
+        selectie.classList.remove('is-visible');
+        resultaten?.replaceChildren();
+        const invoer = document.getElementById('routeSearchInput');
+        if (invoer) {
+          invoer.value = '';
+          invoer.setAttribute('aria-expanded', 'false');
+          invoer.focus();
+        }
+      });
+      selectie.append(details, wisKnop);
       selectie.classList.add('is-visible');
 
     }
@@ -493,13 +512,19 @@
     }
 
     async function laadLijnbusZoekdata() {
-      const antwoord = await fetch('media/zoek-data.json');
-      if (!antwoord.ok) throw new Error('Zoekdata kon niet worden geladen.');
-      const tekst = await antwoord.text();
-      lijnbusZoekdata = tekst.split(/\r?
-/).slice(1).map(maakZoekrecord).filter(Boolean);
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 12000);
+      try {
+        const antwoord = await fetch('media/zoek-data.json', { signal: controller.signal });
+        if (!antwoord.ok) throw new Error('Zoekdata kon niet worden geladen.');
+        const tekst = (await antwoord.text()).replace(/^\uFEFF/, '');
+        const records = tekst.split(/\r?\n/).slice(1).map(maakZoekrecord).filter(Boolean);
+        if (!records.length) throw new Error('Zoekdata bevat geen geldige records.');
+        lijnbusZoekdata = records;
+      } finally {
+        window.clearTimeout(timeout);
+      }
     }
-
     let laadZoekdataPromise;
 
     function initialiseerLijnbusZoekfunctie() {
@@ -532,6 +557,7 @@
           if (!laadZoekdataPromise) {
             laadZoekdataPromise = laadLijnbusZoekdata().catch(() => {
               laadZoekdataPromise = null;
+              if (!invoer.value.trim() || document.activeElement !== invoer) return;
               resultaten.replaceChildren();
               const fout = document.createElement('p');
               fout.className = 'route-empty';
@@ -541,7 +567,7 @@
           }
           await laadZoekdataPromise;
           if (lijnbusZoekdata.length && invoer.value.trim() && document.activeElement === invoer) toonLijnbusResultaten(invoer.value);
-        }, 60);
+        }, 100);
       });
 
       function wisZoekresultaten() {
@@ -551,9 +577,41 @@
         if (invoer.value.trim() && lijnbusZoekdata.length) toonLijnbusResultaten(invoer.value);
       });
       invoer.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowDown') {
+          const eersteResultaat = resultaten.querySelector('.route-result');
+          if (eersteResultaat) {
+            event.preventDefault();
+            eersteResultaat.focus();
+          }
+          return;
+        }
         if (event.key === 'Escape') {
           wisZoekresultaten();
           invoer.setAttribute('aria-expanded', 'false');
+        }
+      });
+      resultaten.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          wisZoekresultaten();
+          invoer.setAttribute('aria-expanded', 'false');
+          invoer.focus();
+          return;
+        }
+        if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+        const items = resultaten.querySelectorAll('.route-result');
+        const huidig = Array.prototype.indexOf.call(items, event.target.closest('.route-result'));
+        if (event.key === 'ArrowUp' && huidig === 0) {
+          event.preventDefault();
+          invoer.focus();
+          return;
+        }
+        const volgende = event.key === 'ArrowDown'
+          ? Math.min(huidig + 1, items.length - 1)
+          : Math.max(huidig - 1, 0);
+        if (huidig >= 0 && items[volgende]) {
+          event.preventDefault();
+          items[volgende].focus();
         }
       });
       document.addEventListener('pointerdown', (event) => {
