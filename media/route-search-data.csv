@@ -133,7 +133,7 @@ Lijncode;Filmcode;Lijnnummer;Bestemming;Cijferkleur;Lijnkleur
 5300;0304;30;Jabbeke;#000000;#1199DD
 5300;0305;30;Westkerke;#000000;#1199DD
 5300;0306;30;Oudenburg;#000000;#1199DD
-5300;0307;30;Oostende Marie-Jos plein;#000000;#1199DD
+5300;0307;30;Oostende Marie-Joséplein;#000000;#1199DD
 5300;0308;30;Oostende;#000000;#1199DD
 5380;0380;38;Pekelput;#000000;#0099AA
 5380;0381;38;Uitkerke;#000000;#0099AA
@@ -499,7 +499,7 @@ Lijncode;Filmcode;Lijnnummer;Bestemming;Cijferkleur;Lijnkleur
 5515;5154;515;Hoogstade;#000000;#C5AA77
 5515;5155;515;Roesbrugge;#000000;#C5AA77
 5516;5160;51b;Oostende;#FFFFFF;#005555
-5516;5161;51b;Oostende Marie-Jos plein;#FFFFFF;#005555
+5516;5161;51b;Oostende Marie-Joséplein;#FFFFFF;#005555
 5516;5162;51b;Gistel;#FFFFFF;#005555
 5516;5163;51b;Westkerke;#FFFFFF;#005555
 5516;5164;51b;Eernegem;#FFFFFF;#005555
@@ -512,7 +512,7 @@ Lijncode;Filmcode;Lijnnummer;Bestemming;Cijferkleur;Lijnkleur
 5518;5182;518;Eernegem Halve Bareel;#000000;#C5AA77
 5518;5183;518;Gistel;#000000;#C5AA77
 5519;5190;51a;Oostende;#FFFFFF;#005555
-5519;5191;51a;Oostende Marie-Jos plein;#FFFFFF;#005555
+5519;5191;51a;Oostende Marie-Joséplein;#FFFFFF;#005555
 5519;5192;51a;Stene Duinkerkseweg;#FFFFFF;#005555
 5519;5193;51a;Gistel;#FFFFFF;#005555
 5519;5194;51a;Westkerke;#FFFFFF;#005555
@@ -567,7 +567,7 @@ Lijncode;Filmcode;Lijnnummer;Bestemming;Cijferkleur;Lijnkleur
 5604;6041;604;Kuurne Industriezone;#000000;#C5AA77
 5604;6042;604;Kortrijk Station;#000000;#C5AA77
 5609;6070;60a;Oostende;#000000;#FF88AA
-5609;6071;60a;Marie-Jos plein;#000000;#FF88AA
+5609;6071;60a;Marie-Joséplein;#000000;#FF88AA
 5609;6072;60a;Luchthaven;#000000;#FF88AA
 5609;6073;60a;Raversijde;#000000;#FF88AA
 5609;6074;60a;Middelkerke Ter Strepe;#000000;#FF88AA
@@ -579,7 +579,7 @@ Lijncode;Filmcode;Lijnnummer;Bestemming;Cijferkleur;Lijnkleur
 5609;6080;60a;Veurne Station;#000000;#FF88AA
 5609;6081;60a;Veurne Ziekenhuis;#000000;#FF88AA
 5608;6090;60b;Oostende;#000000;#FF88AA
-5608;6091;60b;Marie-Jos plein;#000000;#FF88AA
+5608;6091;60b;Marie-Joséplein;#000000;#FF88AA
 5608;6092;60b;Luchthaven;#000000;#FF88AA
 5608;6093;60b;Raversijde;#000000;#FF88AA
 5608;6094;60b;Leffinge;#000000;#FF88AA
@@ -824,11 +824,11 @@ Lijncode;Filmcode;Lijnnummer;Bestemming;Cijferkleur;Lijnkleur
 5897;8971;F70;Loppem;#000000;#8CCDFF
 5897;8972;F70;Aartrijke;#000000;#8CCDFF
 5901;9010;1;AZ Serruys;#FFFFFF;#991199
-5901;9011;1;Marie-Jos plein;#FFFFFF;#991199
+5901;9011;1;Marie-Joséplein;#FFFFFF;#991199
 5901;9012;1;Station;#FFFFFF;#991199
 5901;9013;1;Konterdam;#FFFFFF;#991199
 5901;9014;1;AZ Damiaan;#FFFFFF;#991199
-5029;9020;2;Marie-Jos plein;#FFFFFF;#229922
+5029;9020;2;Marie-Joséplein;#FFFFFF;#229922
 5029;9021;2;Station;#FFFFFF;#229922
 5029;9022;2;Groenendijk;#FFFFFF;#229922
 5029;9023;2;Breeweg;#FFFFFF;#229922
@@ -836,15 +836,15 @@ Lijncode;Filmcode;Lijnnummer;Bestemming;Cijferkleur;Lijnkleur
 5902;9026;902;Moorslede;#000000;#C5AA77
 5902;9027;902;Dadizele;#000000;#C5AA77
 5038;9030;3;Station;#FFFFFF;#DD0077
-5038;9031;3;Station via Marie-Jos plein;#FFFFFF;#DD0077
-5038;9032;3;Marie-Jos plein;#FFFFFF;#DD0077
+5038;9031;3;Station via Marie-Joséplein;#FFFFFF;#DD0077
+5038;9032;3;Marie-Joséplein;#FFFFFF;#DD0077
 5038;9033;3;Baanhof;#FFFFFF;#DD0077
-5038;9034;3;Baanhof via Marie-Jos plein;#FFFFFF;#DD0077
-5049;9040;4;Marie-Jos plein;#FFFFFF;#0044BB
+5038;9034;3;Baanhof via Marie-Joséplein;#FFFFFF;#DD0077
+5049;9040;4;Marie-Joséplein;#FFFFFF;#0044BB
 5049;9041;4;Station;#FFFFFF;#0044BB
 5049;9042;4;Bredene;#FFFFFF;#0044BB
 5905;9050;5;Stene Dorp;#FFFFFF;#229922
-5905;9051;5;Marie-Jos plein;#FFFFFF;#229922
+5905;9051;5;Marie-Joséplein;#FFFFFF;#229922
 5905;9052;5;Stene Dorp;#FFFFFF;#229922
 5905;9053;5;Stene Duinkerkseweg;#FFFFFF;#229922
 5905;9057;5;Stene Lyceum;#FFFFFF;#229922
@@ -866,25 +866,25 @@ Lijncode;Filmcode;Lijnnummer;Bestemming;Cijferkleur;Lijnkleur
 5921;9210;921;Ieper Station;#000000;#C5AA77
 5921;9211;921;Houthulst Markt;#000000;#C5AA77
 5509;9500;50;Oostende;#000000;#8CCDFF
-5509;9501;50;Oostende via Marie-Jos plein;#000000;#8CCDFF
-5509;9502;50;Oostende Marie-Jos plein;#000000;#8CCDFF
+5509;9501;50;Oostende via Marie-Joséplein;#000000;#8CCDFF
+5509;9502;50;Oostende Marie-Joséplein;#000000;#8CCDFF
 5509;9503;50;Stene Duinkerkseweg;#000000;#8CCDFF
 5509;9504;50;Gistel;#000000;#8CCDFF
-5509;9505;50;Gistel via Marie-Jos plein;#000000;#8CCDFF
+5509;9505;50;Gistel via Marie-Joséplein;#000000;#8CCDFF
 5509;9506;50;Westkerke;#000000;#8CCDFF
 5509;9507;50;Eernegem Kerk;#000000;#8CCDFF
 5509;9508;50;Koekelare Galgestraat;#000000;#8CCDFF
 5509;9509;50;Koekelare Dorp;#000000;#8CCDFF
 5519;9510;51;Oostende;#FFFFFF;#005555
-5519;9511;51;Oostende via Marie-Jos plein;#FFFFFF;#005555
-5519;9512;51;Oostende Marie-Jos plein;#FFFFFF;#005555
+5519;9511;51;Oostende via Marie-Joséplein;#FFFFFF;#005555
+5519;9512;51;Oostende Marie-Joséplein;#FFFFFF;#005555
 5519;9513;51;Stene Duinkerkseweg;#FFFFFF;#005555
 5519;9514;51;Gistel;#FFFFFF;#005555
-5519;9515;51;Gistel via Marie-Jos plein;#FFFFFF;#005555
+5519;9515;51;Gistel via Marie-Joséplein;#FFFFFF;#005555
 5519;9516;51;Westkerke;#FFFFFF;#005555
 5519;9517;51;Eernegem Kerk;#FFFFFF;#005555
 5519;9518;51;Torhout;#FFFFFF;#005555
-5519;9519;51;Torhout via Marie-Jos plein;#FFFFFF;#005555
+5519;9519;51;Torhout via Marie-Joséplein;#FFFFFF;#005555
 5529;9520;52;Oostende;#000000;#FF88AA
 5529;9521;52;Stene Duinkerkseweg;#000000;#FF88AA
 5529;9522;52;Leffinge;#000000;#FF88AA
@@ -893,22 +893,22 @@ Lijncode;Filmcode;Lijnnummer;Bestemming;Cijferkleur;Lijnkleur
 5952;9528;952;Langemark;#000000;#C5AA77
 5952;9529;952;Poelkapelle;#000000;#C5AA77
 5539;9530;53;Oostende;#FFFFFF;#800000
-5539;9531;53;Oostende via Marie-Jos plein;#FFFFFF;#800000
-5539;9532;53;Oostende Marie-Jos plein;#FFFFFF;#800000
+5539;9531;53;Oostende via Marie-Joséplein;#FFFFFF;#800000
+5539;9532;53;Oostende Marie-Joséplein;#FFFFFF;#800000
 5539;9533;53;Stene Duinkerkseweg;#FFFFFF;#800000
 5539;9534;53;Leffinge;#FFFFFF;#800000
-5539;9535;53;Leffinge via Marie-Jos plein;#FFFFFF;#800000
+5539;9535;53;Leffinge via Marie-Joséplein;#FFFFFF;#800000
 5539;9536;53;Leke;#FFFFFF;#800000
 5539;9537;53;Diksmuide Station;#FFFFFF;#800000
 5609;9598;60;Koksijde Station;#FFFFFF;#229922
 5609;9599;60;Raversijde;#FFFFFF;#229922
 5609;9600;60;Oostende;#FFFFFF;#229922
-5609;9601;60;Oostende via Marie-Jos plein;#FFFFFF;#229922
-5609;9602;60;Oostende Marie-Jos plein;#FFFFFF;#229922
+5609;9601;60;Oostende via Marie-Joséplein;#FFFFFF;#229922
+5609;9602;60;Oostende Marie-Joséplein;#FFFFFF;#229922
 5609;9603;60;Luchthaven;#FFFFFF;#229922
-5609;9604;60;Luchthaven via Marie-Jos plein;#FFFFFF;#229922
+5609;9604;60;Luchthaven via Marie-Joséplein;#FFFFFF;#229922
 5609;9605;60;Middelkerke Ter Strepe;#FFFFFF;#229922
-5609;9606;60;Middelkerke via Marie-Jos plein;#FFFFFF;#229922
+5609;9606;60;Middelkerke via Marie-Joséplein;#FFFFFF;#229922
 5609;9607;60;Westende;#FFFFFF;#229922
 5609;9608;60;Nieuwpoort;#FFFFFF;#229922
 5609;9609;60;Koksijde Galloper;#FFFFFF;#229922

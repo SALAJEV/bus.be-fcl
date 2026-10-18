@@ -1,4 +1,4 @@
-const CACHE_NAME = "busbe-filmcodes-v37";
+const CACHE_NAME = "busbe-filmcodes-v40";
 const APP_SHELL = [
   "./index.html",
   "./manifest.webmanifest",

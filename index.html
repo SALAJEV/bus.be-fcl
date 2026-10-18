@@ -7,6 +7,8 @@
   <meta name="color-scheme" content="light dark" />
   <link rel="icon" href="media/favicon.ico" type="image/x-icon" />
   <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="preload" as="image" href="media/background-mobile.jpg" media="(max-width: 760px)" />
+  <link rel="preload" as="image" href="media/background-desktop.jpg" media="(min-width: 761px)" />
   <meta name="theme-color" content="#f0f1f1" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#18181a" media="(prefers-color-scheme: dark)" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -61,14 +63,13 @@
 
     .lists-heading { display: flex; align-items: end; justify-content: space-between; gap: 14px; padding: 0 3px; }
     .lists-heading h2 { color: var(--ink); font-family: var(--heading-font); font-size: clamp(1.35rem,2.5vw,1.7rem); font-weight: 700; letter-spacing: -.035em; line-height: 1.2; }
-    .search-heading { margin-bottom: -13px; }
     .card, .usage-guide, .page-disclaimer { min-width: 0; padding: clamp(21px,3vw,30px); border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--surface); box-shadow: var(--shadow); }
     .card.route-search-card { position: relative; z-index: 4; overflow: visible; background: linear-gradient(var(--brand-orange),var(--brand-orange)) top / 100% 4px no-repeat, var(--surface); }
     .route-search-card h2, .card h2 { margin-bottom: 8px; color: var(--ink); font-family: var(--heading-font); font-size: clamp(1.22rem,2vw,1.45rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.25; }
     .search-help, .card p { color: var(--muted); font-size: .9rem; line-height: 1.6; }
     .search-help { max-width: 70ch; margin-bottom: 16px; }
     .route-search { position: relative; display: grid; gap: 10px; }
-    .route-search input { width: 100%; min-height: 52px; padding: 12px 16px; border: 1px solid var(--field-border); border-radius: 11px; background: var(--field); color: var(--ink); font-size: .94rem; transition: border-color .18s ease,box-shadow .18s ease; }
+    .route-search input { width: 100%; min-height: 52px; padding: 12px 16px; border: 1px solid var(--field-border); border-radius: 11px; background: var(--field); color: var(--ink); font-size: .94rem; transition: border-color .18s ease,box-shadow .18s ease,background .18s ease; }
     .route-search input::placeholder { color: var(--muted); opacity: .82; }
     .route-search input:focus { border-color: var(--brand-purple); box-shadow: 0 0 0 3px rgba(66,22,82,.1); outline: none; }
     .route-results { position: absolute; z-index: 30; top: calc(100% + 7px); left: 0; display: grid; width: 100%; max-height: min(360px,55vh); gap: 4px; padding: 7px; overflow-y: auto; overscroll-behavior: contain; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); box-shadow: 0 15px 34px rgba(15,15,18,.15); }
@@ -76,21 +77,25 @@
     .route-result { display: grid; width: 100%; grid-template-columns: auto minmax(0,1fr); align-items: center; gap: 11px; min-height: 45px; padding: 9px 11px; border: 0; border-radius: 8px; background: var(--surface-soft); color: var(--ink); cursor: pointer; text-align: left; transition: background .15s ease; }
     .route-result:hover, .route-result:focus-visible { background: rgba(204,81,24,.1); outline: none; }
     .route-empty { padding: 13px; color: var(--muted); }
-    .route-selection { position: relative; display: none; grid-template-columns: auto minmax(0,1fr); align-items: center; gap: 12px; padding: 13px 52px 13px 13px; border: 1px solid var(--line); border-radius: 11px; background: var(--surface-soft); }
+    .route-selection { position: relative; display: none; grid-template-columns: auto minmax(0,1fr); align-items: center; gap: 12px; min-height: 82px; padding: 13px 60px 13px 14px; border: 1px solid rgba(204,81,24,.3); border-radius: 12px; background: linear-gradient(120deg,rgba(204,81,24,.07),transparent 72%),var(--surface-soft); box-shadow: 0 4px 14px rgba(20,20,24,.045); }
     .route-selection.is-visible { display: grid; }
-    .route-selection-clear { position: absolute; top: 7px; right: 7px; display: grid; width: 35px; height: 35px; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--muted); font-size: 1.3rem; line-height: 1; cursor: pointer; transition: color .15s ease,background .15s ease,border-color .15s ease; }
-    .route-selection-clear:hover { border-color: var(--brand-orange); background: rgba(204,81,24,.08); color: var(--brand-orange-dark); }
-    .route-selection-label { margin-bottom: 3px; color: var(--muted); font-size: .66rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
-    .route-number { display: inline-grid; min-width: 46px; min-height: 36px; padding: 4px 9px; place-items: center; border-radius: 7px; color: #fff; font-size: .96rem; font-weight: 800; }
-    .route-destination { color: var(--ink); font-size: .92rem; line-height: 1.4; }
+    .route-selection-clear { position: absolute; top: 50%; right: 10px; display: grid; width: 38px; height: 38px; place-items: center; transform: translateY(-50%); border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--muted); cursor: pointer; box-shadow: 0 2px 7px rgba(20,20,24,.08); transition: color .15s ease,background .15s ease,border-color .15s ease,box-shadow .15s ease; }
+    .route-selection-clear::before, .route-selection-clear::after { position: absolute; top: 50%; left: 50%; width: 14px; height: 2px; border-radius: 2px; background: currentColor; content: ''; }
+    .route-selection-clear::before { transform: translate(-50%,-50%) rotate(45deg); }
+    .route-selection-clear::after { transform: translate(-50%,-50%) rotate(-45deg); }
+    .route-selection-clear:hover { border-color: var(--brand-orange); background: var(--brand-orange); color: #fff; box-shadow: 0 4px 12px rgba(204,81,24,.24); }
+    .route-selection-clear:focus-visible { border-color: var(--brand-orange); outline: 3px solid rgba(204,81,24,.28); outline-offset: 2px; }
+    .route-selection-label { margin-bottom: 4px; color: var(--brand-orange-dark); font-size: .66rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .route-number { display: inline-grid; min-width: 46px; min-height: 36px; padding: 4px 9px; place-items: center; border: 1px solid rgba(25,25,28,.08); border-radius: 8px; color: #fff; font-size: .96rem; font-weight: 800; box-shadow: 0 2px 5px rgba(20,20,24,.12); }
+    .route-details { min-width: 0; }
+    .route-destination { color: var(--ink); font-size: .92rem; font-weight: 600; line-height: 1.4; overflow-wrap: anywhere; }
     .route-filmcode { display: block; margin-top: 4px; color: var(--brand-orange-dark); font-size: .77rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
     .route-filmcode.is-selected { color: var(--brand-purple); }
-    @media (min-width: 900px) {
-      .route-search-card { display: grid; grid-template-columns: minmax(0,1fr) minmax(280px,1fr); column-gap: clamp(20px,4vw,42px); align-items: center; }
-      .route-search-card h2, .search-help { grid-column: 1; }
-      .route-search-card h2 { grid-row: 1; }
-      .search-help { grid-row: 2; margin-bottom: 0; }
-      .route-search { grid-column: 2; grid-row: 1 / span 2; }
+    @media (min-width: 761px) {
+      .route-search-card { display: grid; grid-template-columns: minmax(0,1fr) minmax(280px,1fr); column-gap: clamp(20px,4vw,42px); align-items: start; }
+      .search-intro { grid-column: 1; grid-row: 1; }
+      .search-help { margin-bottom: 0; }
+      .route-search { grid-column: 2; grid-row: 1; }
     }
 
     .cards-layout { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
@@ -110,7 +115,11 @@
 
     .usage-guide { position: relative; overflow: hidden; padding: clamp(23px,3.5vw,34px); }
     .usage-guide h2 { margin-bottom: 15px; color: var(--ink); font-family: var(--heading-font); font-size: clamp(1.28rem,2.2vw,1.6rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.25; }
+    .guide-intro { max-width: 78ch; margin-bottom: 18px; }
+    .guide-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(20px,4vw,46px); }
+    .guide-column { min-width: 0; }
     .usage-guide h3 { margin: 21px 0 7px; padding-left: 11px; border-left: 3px solid var(--brand-orange); color: var(--brand-purple); font-size: 1rem; font-weight: 700; line-height: 1.35; }
+    .guide-column h3:first-child { margin-top: 0; }
     .usage-guide p, .usage-guide li { color: var(--muted); font-size: .9rem; line-height: 1.7; }
     .usage-guide p + p, .usage-guide ul + p { margin-top: 9px; }
     .usage-guide ul { margin-left: 20px; }
@@ -168,6 +177,9 @@
       .banner-text { font-size: clamp(2.55rem,8vw,3.5rem); }
       .cards-layout { grid-template-columns: 1fr; gap: 13px; }
       .card, .route-search-card { padding: 22px 20px; }
+      .guide-grid { grid-template-columns: 1fr; gap: 0; }
+      .route-search input { font-size: 1rem; }
+      .btn, .btn-half { min-height: 48px; }
       .pdf-overlay { padding: 9px; }
       .pdf-panel { width: 100%; height: 96dvh; border-radius: 13px; }
       .pdf-toolbar { padding: 9px 11px; }
@@ -190,11 +202,14 @@
       .card { padding-top: 25px; }
       .route-search-card h2, .card h2 { font-size: 1.16rem; }
       .search-help, .card p { font-size: .84rem; }
-      .route-search input { min-height: 49px; padding: 11px 13px; font-size: .88rem; }
-      .buttons-grid { grid-template-columns: 1fr; gap: 8px; }
-      .btn, .btn-half { width: 100%; min-height: 46px; }
+      .route-search input { min-height: 52px; padding: 11px 13px; font-size: 1rem; }
+      .buttons-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+      .btn, .btn-half { width: 100%; min-height: 48px; padding-right: 9px; padding-left: 9px; }
       .usage-guide { padding: 20px 17px; border-radius: 15px; }
       .usage-guide p, .usage-guide li { font-size: .84rem; }
+      .guide-intro { margin-bottom: 14px; }
+      .guide-grid { grid-template-columns: 1fr; gap: 0; }
+      .usage-guide h3 { margin-top: 17px; }
       .route-results { max-height: 52vh; }
       .access-overlay { padding: 13px; }
       .pdf-title { max-width: calc(100vw - 88px); font-size: .94rem; }
@@ -218,20 +233,18 @@
           </h1>
         </div>
         <div class="banner-mark">
-          <img src="media/busbe-logo.svg" alt="bus.be logo" />
+          <img src="media/busbe-logo.svg" alt="bus.be logo" width="184" height="150" decoding="async" />
         </div>
       </div>
     </div>
 
-    <div class="lists-heading search-heading">
-      <h2>Zoekmachine</h2>
-    </div>
-
     <section class="card route-search-card" aria-labelledby="zoekFilmcodeTitel">
-      <h2 id="zoekFilmcodeTitel">Zoek filmcodes</h2>
-      <p class="search-help">Typ een lijnnummer, bestemming, filmcode of lijncode. Kies daarna een resultaat om de bestemming en filmcode te bekijken.</p>
+      <div class="search-intro">
+        <h2 id="zoekFilmcodeTitel">Zoek filmcodes</h2>
+        <p id="zoekFilmcodeHelp" class="search-help">Zoek op lijnnummer, bestemming, filmcode of lijncode. Kies een resultaat voor de bestemming en filmcode.</p>
+      </div>
       <div class="route-search">
-        <input id="routeSearchInput" type="search" aria-label="Zoek filmcodes" aria-expanded="false" aria-controls="routeResults" placeholder="Zoek op lijnnummer, bestemming, filmcode of lijncode." autocomplete="off" />
+        <input id="routeSearchInput" type="search" aria-label="Zoek filmcodes" aria-describedby="zoekFilmcodeHelp" aria-expanded="false" aria-controls="routeResults" placeholder="Lijn, bestemming, filmcode of lijncode" autocomplete="off" />
         <div id="routeSelection" class="route-selection" aria-live="polite"></div>
         <div id="routeResults" class="route-results" aria-live="polite"></div>
       </div>
@@ -270,29 +283,36 @@
 
     <section class="usage-guide" aria-labelledby="gebruikFilmbeeldenTitel">
       <h2 id="gebruikFilmbeeldenTitel">Gebruik van filmbeelden bij lijnbussen</h2>
-      <p><strong>Beste chauffeur,</strong></p>
-      <p>De Lijn controleert streng op het correcte gebruik van de filmbeelden. Het is daarom belangrijk dat op elke rit steeds het juiste filmbeeld wordt weergegeven.</p>
+      <div class="guide-intro">
+        <p><strong>Beste chauffeur,</strong></p>
+        <p>De Lijn controleert streng op het correcte gebruik van de filmbeelden. Het is daarom belangrijk dat op elke rit steeds het juiste filmbeeld wordt weergegeven.</p>
+      </div>
+      <div class="guide-grid">
+        <div class="guide-column">
+          <h3>Lijndiensten</h3>
+          <p>Gebruik bij een lijndienst altijd het filmbeeld dat overeenkomt met de <strong>lijn, bestemming en rit op het dienstblad</strong>. Gebruik geen andere filmbeelden wanneer deze niet bij de betreffende rit horen.</p>
 
-      <h3>Lijndiensten</h3>
-      <p>Gebruik bij een lijndienst altijd het filmbeeld dat overeenkomt met de <strong>lijn, bestemming en rit op het dienstblad</strong>. Gebruik geen andere filmbeelden wanneer deze niet bij de betreffende rit horen.</p>
+          <h3>Ledige ritten en pauzes</h3>
+          <p>Bij ledige ritten of wanneer de bus tijdelijk niet in dienst is, kan je gebruikmaken van passende filmbeelden zoals <strong>&quot;Geen dienst&quot;</strong>, <strong>&quot;bus.be&quot;</strong>, <strong>&quot;Even pauze&quot;</strong>, enz.</p>
 
-      <h3>Ledige ritten en pauzes</h3>
-      <p>Bij ledige ritten of wanneer de bus tijdelijk niet in dienst is, kan je gebruikmaken van passende filmbeelden zoals <strong>&quot;Geen dienst&quot;</strong>, <strong>&quot;bus.be&quot;</strong>, <strong>&quot;Even pauze&quot;</strong>, enz.</p>
+          <h3>Waarom dit belangrijk is</h3>
+          <p>Gelieve deze afspraken strikt te respecteren. Wanneer De Lijn een klacht ontvangt over het gebruik van bepaalde filmbeelden, bestaat de mogelijkheid dat deze filmbeelden <strong>van de bussen worden verwijderd</strong>.</p>
+          <p>Dit betekent dat bepaalde nuttige filmbeelden daarna niet meer beschikbaar zijn voor andere chauffeurs. Door de juiste filmbeelden te gebruiken, voorkomen we dit samen.</p>
+          <p><strong>Alvast bedankt voor jullie medewerking en het correct gebruik van de filmbeelden.</strong></p>
+        </div>
+        <div class="guide-column">
+          <h3>Welkomst- en seizoensfilms</h3>
+          <p>Filmbeelden zoals <strong>&quot;Goedendag&quot;</strong>, <strong>&quot;Goedemorgen&quot;</strong>, <strong>&quot;Happy Halloween&quot;</strong>, <strong>&quot;Prettige feestdagen&quot;</strong>, enz. mogen gebruikt worden, maar <strong>altijd met mate en op het juiste moment</strong>.</p>
+          <p>Gebruik bijvoorbeeld <strong>&quot;Prettige feestdagen&quot;</strong> niet al begin november. Dergelijke filmbeelden zijn bedoeld voor de periode waarin ze daadwerkelijk van toepassing zijn.</p>
 
-      <h3>Welkomst- en seizoensfilms</h3>
-      <p>Filmbeelden zoals <strong>&quot;Goedendag&quot;</strong>, <strong>&quot;Goedemorgen&quot;</strong>, <strong>&quot;Happy Halloween&quot;</strong>, <strong>&quot;Prettige feestdagen&quot;</strong>, enz. mogen gebruikt worden, maar <strong>altijd met mate en op het juiste moment</strong>.</p>
-      <p>Gebruik bijvoorbeeld <strong>&quot;Prettige feestdagen&quot;</strong> niet al begin november. Dergelijke filmbeelden zijn bedoeld voor de periode waarin ze daadwerkelijk van toepassing zijn.</p>
+          <h3>Niet gebruiken</h3>
+          <ul>
+            <li>Gebruik geen filmbeelden waarvan de code begint met <strong>95xx</strong> of <strong>99xx</strong>.</li>
+            <li>Filmbeelden voor <strong>voetbalritten</strong> mogen uitsluitend gebruikt worden tijdens de daarvoor voorziene voetbalritten en niet tijdens gewone lijndiensten.</li>
+          </ul>
 
-      <h3>Niet gebruiken</h3>
-      <ul>
-        <li>Gebruik geen filmbeelden waarvan de code begint met <strong>95xx</strong> of <strong>99xx</strong>.</li>
-        <li>Filmbeelden voor <strong>voetbalritten</strong> mogen uitsluitend gebruikt worden tijdens de daarvoor voorziene voetbalritten en niet tijdens gewone lijndiensten.</li>
-      </ul>
-
-      <h3>Waarom dit belangrijk is</h3>
-      <p>Gelieve deze afspraken strikt te respecteren. Wanneer De Lijn een klacht ontvangt over het gebruik van bepaalde filmbeelden, bestaat de mogelijkheid dat deze filmbeelden <strong>van de bussen worden verwijderd</strong>.</p>
-      <p>Dit betekent dat bepaalde nuttige filmbeelden daarna niet meer beschikbaar zijn voor andere chauffeurs. Door de juiste filmbeelden te gebruiken, voorkomen we dit samen.</p>
-      <p><strong>Alvast bedankt voor jullie medewerking en het correct gebruik van de filmbeelden.</strong></p>
+        </div>
+      </div>
     </section>
 
     <section class="page-disclaimer" aria-label="Disclaimer">
@@ -328,7 +348,14 @@
   </div>
   <script>
 const TOEGANG_OPGESLAGEN_SLEUTEL = 'busbe_filmcodelijsten_toegang_ok';
-    const TOEGANG_CODE = '550524';
+    const TOEGANG_CODE_HASH = 'f1b580ffe567fbde3cbe24eaf565eb0321d5881c4431661c7c60e6fe04c22e6b';
+
+    async function isJuisteToegangscode(code) {
+      const bytes = new TextEncoder().encode(code);
+      const digest = await crypto.subtle.digest('SHA-256', bytes);
+      const hash = Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, '0')).join('');
+      return hash === TOEGANG_CODE_HASH;
+    }
 
     function heeftOpgeslagenToegang() {
       try {
@@ -392,20 +419,29 @@ const TOEGANG_OPGESLAGEN_SLEUTEL = 'busbe_filmcodelijsten_toegang_ok';
         return;
       }
 
-      form.addEventListener('submit', (event) => {
+      form.addEventListener('submit', async (event) => {
         event.preventDefault();
-        if (input.value.trim() !== TOEGANG_CODE) {
-          toonToegangFout('Toegang geweigerd: verkeerde code.');
-          input.value = '';
-          input.focus();
-          return;
-        }
+        const verstuurKnop = form.querySelector('button[type="submit"]');
+        verstuurKnop.disabled = true;
+        try {
+          if (!(await isJuisteToegangscode(input.value.trim()))) {
+            toonToegangFout('Toegang geweigerd: verkeerde code.');
+            input.value = '';
+            input.focus();
+            return;
+          }
 
-        slaToegangOp();
-        toonToegangFout('');
-        sluitToegangModal();
-        initialiseerPdfOverlay();
-        initialiseerLijnbusZoekfunctie();
+          slaToegangOp();
+          toonToegangFout('');
+          sluitToegangModal();
+          initialiseerPdfOverlay();
+          initialiseerLijnbusZoekfunctie();
+        } catch (error) {
+          console.error('Access code could not be verified.', error);
+          toonToegangFout('Toegangscode kon niet worden gecontroleerd. Herlaad de pagina en probeer opnieuw.');
+        } finally {
+          verstuurKnop.disabled = false;
+        }
       });
     }
 
@@ -491,7 +527,6 @@ const TOEGANG_OPGESLAGEN_SLEUTEL = 'busbe_filmcodelijsten_toegang_ok';
       const wisKnop = document.createElement('button');
       wisKnop.type = 'button';
       wisKnop.className = 'route-selection-clear';
-      wisKnop.textContent = String.fromCharCode(0x00D7);
       wisKnop.setAttribute('aria-label', 'Selectie wissen');
       wisKnop.title = 'Selectie wissen';
       wisKnop.addEventListener('click', () => {
